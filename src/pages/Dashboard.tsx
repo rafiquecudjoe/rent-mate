@@ -5,7 +5,11 @@ import LeasesTable from '../components/LeasesTable';
 import RecentActivity from '../components/RecentActivity';
 import QuickActions from '../components/QuickActions';
 
-export default function Dashboard() {
+interface DashboardProps {
+  onRecordPayment?: () => void;
+}
+
+export default function Dashboard({ onRecordPayment }: DashboardProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -15,7 +19,7 @@ export default function Dashboard() {
           </h1>
           <p className="text-gray-600">Here's what's happening with your properties today.</p>
         </div>
-        <QuickActions />
+        <QuickActions onRecordPayment={onRecordPayment} />
       </div>
 
       <StatsCards />

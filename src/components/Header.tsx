@@ -2,9 +2,10 @@ import { Bell, Menu, Plus, Building2 } from 'lucide-react';
 
 interface HeaderProps {
   onMenuClick: () => void;
+  onNotificationClick?: () => void;
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
+export default function Header({ onMenuClick, onNotificationClick }: HeaderProps) {
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
       <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 py-4">
@@ -29,7 +30,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
             <span className="font-medium sm:hidden">Add Property</span>
           </button>
 
-          <button className="relative p-2 hover:bg-gray-100 rounded-lg">
+          <button onClick={onNotificationClick} className="relative p-2 hover:bg-gray-100 rounded-lg">
             <Bell className="w-5 h-5 text-gray-700" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
           </button>

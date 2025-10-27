@@ -55,7 +55,11 @@ const payments = [
   },
 ];
 
-export default function Payments() {
+interface PaymentsProps {
+  onViewHistory?: () => void;
+}
+
+export default function Payments({ onViewHistory }: PaymentsProps = {}) {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -68,6 +72,21 @@ export default function Payments() {
           <span className="font-semibold">Export Report</span>
         </button>
       </div>
+
+      {onViewHistory && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold text-blue-900 mb-1">View Complete Payment History</h3>
+            <p className="text-sm text-blue-700">See all your past transactions and payment records</p>
+          </div>
+          <button
+            onClick={onViewHistory}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium"
+          >
+            View History
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (

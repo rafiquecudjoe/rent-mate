@@ -5,6 +5,7 @@ interface SidebarProps {
   onClose: () => void;
   currentPage: string;
   onNavigate: (page: string) => void;
+  onAddProperty?: () => void;
 }
 
 const menuItems = [
@@ -15,7 +16,7 @@ const menuItems = [
   { icon: Settings, label: 'Settings', id: 'settings' },
 ];
 
-export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAddProperty }: SidebarProps) {
   return (
     <>
       {isOpen && (
@@ -69,7 +70,14 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate }: Si
             </ul>
           </nav>
 
-          <div className="p-6 border-t border-gray-200">
+          <div className="p-4 border-t border-gray-200 space-y-4">
+            <button
+              onClick={onAddProperty}
+              className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-xl"
+            >
+              Add New Property
+            </button>
+
             <div className="flex items-center gap-3">
               <img
                 src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100"
