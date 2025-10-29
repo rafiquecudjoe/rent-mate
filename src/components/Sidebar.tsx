@@ -1,4 +1,4 @@
-import { Home, Building2, Users, CreditCard, Settings, X } from 'lucide-react';
+import { Home, Building2, Users, CreditCard, Settings, X, FileText, UserCog, LogOut, Wrench } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -6,6 +6,7 @@ interface SidebarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
   onAddProperty?: () => void;
+  onLogout?: () => void;
 }
 
 const menuItems = [
@@ -13,10 +14,13 @@ const menuItems = [
   { icon: Building2, label: 'Properties', id: 'properties' },
   { icon: Users, label: 'Tenants', id: 'tenants' },
   { icon: CreditCard, label: 'Payments', id: 'payments' },
+  { icon: FileText, label: 'Lease Management', id: 'lease-management' },
+  { icon: Wrench, label: 'Maintenance', id: 'maintenance-requests' },
+  { icon: UserCog, label: 'Team', id: 'team-management' },
   { icon: Settings, label: 'Settings', id: 'settings' },
 ];
 
-export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAddProperty }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAddProperty, onLogout }: SidebarProps) {
   return (
     <>
       {isOpen && (
@@ -38,7 +42,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAd
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <Home className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">RentWise</span>
+              <span className="text-xl font-bold text-gray-900">RentMate</span>
             </div>
             <button
               onClick={onClose}
@@ -48,7 +52,7 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAd
             </button>
           </div>
 
-          <nav className="flex-1 p-4">
+          <nav className="flex-1 overflow-y-auto p-4">
             <ul className="space-y-1">
               {menuItems.map((item) => (
                 <li key={item.label}>
@@ -78,17 +82,25 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAd
               Add New Property
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
               <img
                 src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100"
                 alt="John Doe"
                 className="w-10 h-10 rounded-full object-cover"
               />
-              <div>
+              <div className="flex-1">
                 <div className="font-medium text-gray-900">John Doe</div>
                 <div className="text-sm text-gray-500">Homeowner</div>
               </div>
             </div>
+
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 font-semibold rounded-xl hover:bg-red-100 transition-all duration-200 border border-red-200"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </aside>
