@@ -1,4 +1,4 @@
-import { User, Bell, Lock, CreditCard, Globe, Moon, Shield, Mail } from 'lucide-react';
+import { User, Bell, Lock, Globe, Moon, Mail } from 'lucide-react';
 
 export default function Settings() {
   return (
@@ -26,7 +26,13 @@ export default function Settings() {
                   className="w-20 h-20 rounded-full object-cover ring-4 ring-blue-50"
                 />
                 <div>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                  <button 
+                    onClick={() => {
+                      // In production, this would open file picker
+                      alert('Photo upload functionality would open here');
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+                  >
                     Change Photo
                   </button>
                   <p className="text-xs text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB</p>
@@ -71,7 +77,13 @@ export default function Settings() {
               </div>
 
               <div className="pt-4">
-                <button className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                <button 
+                  onClick={() => {
+                    // In production, this would update profile via API
+                    alert('Profile updated successfully!');
+                  }}
+                  className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
                   Save Changes
                 </button>
               </div>
@@ -110,40 +122,16 @@ export default function Settings() {
               </div>
 
               <div className="pt-4">
-                <button className="px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">
+                <button 
+                  onClick={() => {
+                    // In production, this would update password via API
+                    alert('Password updated successfully!');
+                  }}
+                  className="px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
+                >
                   Update Password
                 </button>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-green-50 rounded-lg">
-                <CreditCard className="w-5 h-5 text-green-600" />
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">Billing</h2>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-400 rounded flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">VISA</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">•••• •••• •••• 4242</p>
-                    <p className="text-sm text-gray-500">Expires 12/25</p>
-                  </div>
-                </div>
-                <button className="text-blue-600 hover:text-blue-700 font-medium text-sm">
-                  Edit
-                </button>
-              </div>
-
-              <button className="w-full px-4 py-2.5 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-                Add Payment Method
-              </button>
             </div>
           </div>
         </div>

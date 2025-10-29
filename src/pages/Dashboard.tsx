@@ -7,9 +7,13 @@ import QuickActions from '../components/QuickActions';
 
 interface DashboardProps {
   onRecordPayment?: () => void;
+  onAddProperty?: () => void;
+  onAddTenant?: () => void;
+  onNavigateToLeaseManagement?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export default function Dashboard({ onRecordPayment }: DashboardProps) {
+export default function Dashboard({ onRecordPayment, onAddProperty, onAddTenant, onNavigateToLeaseManagement, onNavigate }: DashboardProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -19,15 +23,20 @@ export default function Dashboard({ onRecordPayment }: DashboardProps) {
           </h1>
           <p className="text-gray-600">Here's what's happening with your properties today.</p>
         </div>
-        <QuickActions onRecordPayment={onRecordPayment} />
+        <QuickActions 
+          onRecordPayment={onRecordPayment}
+          onAddProperty={onAddProperty}
+          onAddTenant={onAddTenant}
+          onNavigateToLeaseManagement={onNavigateToLeaseManagement}
+        />
       </div>
 
-      <StatsCards />
+      <StatsCards onNavigate={onNavigate} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <IncomeOverview />
-          <LeasesTable />
+          <LeasesTable onNavigateToTenants={() => onNavigate && onNavigate('tenants')} />
         </div>
         <div className="space-y-6">
           <PropertyStatus />
