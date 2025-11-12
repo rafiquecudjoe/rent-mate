@@ -1,4 +1,4 @@
-import { Search, Filter, MapPin, Home, DollarSign, Users, Plus, MoreVertical } from 'lucide-react';
+import { Search, Filter, MapPin, Home, DollarSign, Users, Plus, MoreVertical, Building2, Percent, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 
 const properties = [
@@ -57,66 +57,116 @@ interface PropertiesProps {
 export default function Properties({ onAddProperty, onViewProperty, onEditProperty }: PropertiesProps = {}) {
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [showPropertyMenu, setShowPropertyMenu] = useState<number | null>(null);
+
+  // Calculate portfolio stats
+  const totalProperties = properties.length;
+  const totalUnits = properties.reduce((sum, p) => sum + p.units, 0);
+  const occupiedUnits = properties.reduce((sum, p) => sum + p.occupied, 0);
+  const occupancyRate = totalUnits > 0 ? Math.round((occupiedUnits / totalUnits) * 100) : 0;
+  const monthlyIncome = properties.reduce((sum, p) => sum + p.monthlyIncome, 0);
   
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Properties</h1>
-          <p className="text-gray-600">Manage your property portfolio</p>
-        </div>
+    <div className="h-full bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6 overflow-y-auto transition-colors">
+      {/* Page Title */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4 md:mb-6">
+        <h1 className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Properties</h1>
         <button
           onClick={onAddProperty}
-          className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-xl transform hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-[#475be8] dark:bg-[#6c7ce8] text-white rounded-[10px] hover:bg-[#3f51d7] dark:hover:bg-[#5d6dd8] transition-all duration-200 text-[14px] font-semibold"
         >
-          <Plus className="w-5 h-5" />
-          <span className="font-semibold">Add Property</span>
+          <Plus className="w-4 h-4 md:w-5 md:h-5" />
+          <span>Add Property</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-[8px] bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 flex items-center justify-center">
+              <Building2 className="w-5 h-5 text-[#475be8] dark:text-[#6c7ce8]" />
+            </div>
+            <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e] transition-colors">Total Properties</p>
+          </div>
+          <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{totalProperties}</p>
+        </div>
+
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <Home className="w-5 h-5 text-[#7fba7a]" />
+            </div>
+            <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e] transition-colors">Total Units</p>
+          </div>
+          <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{totalUnits}</p>
+        </div>
+
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-[8px] bg-[#ffce73]/10 flex items-center justify-center">
+              <Percent className="w-5 h-5 text-[#ffce73]" />
+            </div>
+            <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e] transition-colors">Occupancy Rate</p>
+          </div>
+          <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{occupancyRate}%</p>
+          <p className="text-[12px] text-[#808191] dark:text-[#92939e] mt-1 transition-colors">{occupiedUnits} of {totalUnits} units</p>
+        </div>
+
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-[#7fba7a]" />
+            </div>
+            <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e] transition-colors">Monthly Income</p>
+          </div>
+          <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">${monthlyIncome.toLocaleString()}</p>
+        </div>
+      </div>
+
+      {/* Search and Filter */}
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 mb-4 md:mb-6 transition-colors">
         <div className="flex flex-col md:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808191] dark:text-[#92939e]" />
             <input
               type="text"
               placeholder="Search properties..."
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2.5 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
             />
           </div>
           <button 
             onClick={() => setShowFilterMenu(!showFilterMenu)}
-            className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors relative"
+            className="flex items-center gap-2 px-4 py-2.5 border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] transition-colors relative text-[14px] font-medium text-[#11142d] dark:text-[#efefef]"
           >
-            <Filter className="w-5 h-5 text-gray-600" />
-            <span className="font-medium text-gray-700">Filters</span>
+            <Filter className="w-5 h-5" />
+            <span>Filters</span>
             
             {showFilterMenu && (
-              <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 p-4 z-10">
-                <h3 className="font-semibold text-gray-900 mb-3">Filter by Type</h3>
+              <div className="absolute top-full right-0 mt-2 w-56 bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] shadow-lg border border-[#e4e8ef] dark:border-[#272b30] p-4 z-10">
+                <h3 className="text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-3">Filter by Type</h3>
                 <div className="space-y-2 mb-4">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-blue-600" defaultChecked />
-                    <span className="text-sm text-gray-700">Apartment</span>
+                    <input type="checkbox" className="rounded text-[#475be8] dark:text-[#6c7ce8]" defaultChecked />
+                    <span className="text-[13px] text-[#808191] dark:text-[#92939e]">Apartment</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-blue-600" defaultChecked />
-                    <span className="text-sm text-gray-700">House</span>
+                    <input type="checkbox" className="rounded text-[#475be8] dark:text-[#6c7ce8]" defaultChecked />
+                    <span className="text-[13px] text-[#808191] dark:text-[#92939e]">House</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-blue-600" defaultChecked />
-                    <span className="text-sm text-gray-700">Condo</span>
+                    <input type="checkbox" className="rounded text-[#475be8] dark:text-[#6c7ce8]" defaultChecked />
+                    <span className="text-[13px] text-[#808191] dark:text-[#92939e]">Condo</span>
                   </label>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-3">Filter by Status</h3>
+                <h3 className="text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-3">Filter by Status</h3>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-blue-600" defaultChecked />
-                    <span className="text-sm text-gray-700">Active</span>
+                    <input type="checkbox" className="rounded text-[#475be8] dark:text-[#6c7ce8]" defaultChecked />
+                    <span className="text-[13px] text-[#808191] dark:text-[#92939e]">Active</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-blue-600" />
-                    <span className="text-sm text-gray-700">Vacant</span>
+                    <input type="checkbox" className="rounded text-[#475be8] dark:text-[#6c7ce8]" />
+                    <span className="text-[13px] text-[#808191] dark:text-[#92939e]">Vacant</span>
                   </label>
                 </div>
               </div>
@@ -125,7 +175,8 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Property Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {properties.map((property) => {
           const availableUnits = property.units - property.occupied;
           const occupancyRate = property.units > 0 ? Math.round((property.occupied / property.units) * 100) : 0;
@@ -133,7 +184,7 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
           return (
             <div
               key={property.id}
-              className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group"
+              className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border border-[#e4e8ef] dark:border-[#272b30]"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -147,20 +198,20 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
                       e.stopPropagation();
                       setShowPropertyMenu(showPropertyMenu === property.id ? null : property.id);
                     }}
-                    className="p-2 bg-white/90 backdrop-blur-sm rounded-lg hover:bg-white transition-colors"
+                    className="p-2 bg-[#fcfcfc]/90 dark:bg-[#1a1d1f]/90 backdrop-blur-sm rounded-[8px] hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] transition-colors"
                   >
-                    <MoreVertical className="w-5 h-5 text-gray-700" />
+                    <MoreVertical className="w-5 h-5 text-[#11142d] dark:text-[#efefef]" />
                   </button>
                   
                   {showPropertyMenu === property.id && (
-                    <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-20">
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] shadow-lg border border-[#e4e8ef] dark:border-[#272b30] py-2 z-20">
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
                           onViewProperty?.(property.id);
                           setShowPropertyMenu(null);
                         }}
-                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="w-full px-4 py-2 text-left text-[13px] text-[#808191] dark:text-[#92939e] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] transition-colors"
                       >
                         View Details
                       </button>
@@ -170,7 +221,7 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
                           onEditProperty?.(property.id);
                           setShowPropertyMenu(null);
                         }}
-                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="w-full px-4 py-2 text-left text-[13px] text-[#808191] dark:text-[#92939e] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] transition-colors"
                       >
                         Edit Property
                       </button>
@@ -182,7 +233,7 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
                           }
                           setShowPropertyMenu(null);
                         }}
-                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors"
+                        className="w-full px-4 py-2 text-left text-[13px] text-[#f45252] hover:bg-red-50 dark:hover:bg-[#f45252]/10 transition-colors"
                       >
                         Delete Property
                       </button>
@@ -191,18 +242,18 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
                 </div>
                 <div className="absolute top-3 left-3 flex gap-2">
                   {property.status === 'vacant' ? (
-                    <span className="px-3 py-1 bg-red-500 text-white text-xs font-semibold rounded-full">
+                    <span className="px-3 py-1 bg-[#f45252] text-white text-[11px] font-semibold rounded-full">
                       Vacant
                     </span>
                   ) : (
                     <>
                       {availableUnits > 0 && (
-                        <span className="px-3 py-1 bg-green-500 text-white text-xs font-semibold rounded-full">
+                        <span className="px-3 py-1 bg-[#7fba7a] text-white text-[11px] font-semibold rounded-full">
                           {availableUnits} Available
                         </span>
                       )}
                       {availableUnits === 0 && property.units > 0 && (
-                        <span className="px-3 py-1 bg-blue-500 text-white text-xs font-semibold rounded-full">
+                        <span className="px-3 py-1 bg-[#475be8] dark:bg-[#6c7ce8] text-white text-[11px] font-semibold rounded-full">
                           Fully Occupied
                         </span>
                       )}
@@ -211,43 +262,43 @@ export default function Properties({ onAddProperty, onViewProperty, onEditProper
                 </div>
               </div>
 
-              <div className="p-5">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{property.name}</h3>
-                <div className="flex items-center gap-2 text-gray-600 mb-4">
+              <div className="p-4 md:p-5">
+                <h3 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-2 transition-colors">{property.name}</h3>
+                <div className="flex items-center gap-2 text-[#808191] dark:text-[#92939e] mb-4">
                   <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{property.address}</span>
+                  <span className="text-[13px]">{property.address}</span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 mb-4">
-                  <div className="text-center p-2 bg-blue-50 rounded-lg">
-                    <Home className="w-4 h-4 text-blue-600 mx-auto mb-1" />
-                    <p className="text-xs text-gray-600">Type</p>
-                    <p className="text-xs font-semibold text-gray-900">{property.type}</p>
+                  <div className="text-center p-2 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px]">
+                    <Home className="w-4 h-4 text-[#475be8] dark:text-[#6c7ce8] mx-auto mb-1" />
+                    <p className="text-[11px] text-[#808191] dark:text-[#92939e]">Type</p>
+                    <p className="text-[11px] font-semibold text-[#11142d] dark:text-[#efefef]">{property.type}</p>
                   </div>
-                  <div className="text-center p-2 bg-green-50 rounded-lg">
-                    <Users className="w-4 h-4 text-green-600 mx-auto mb-1" />
-                    <p className="text-xs text-gray-600">Occupancy</p>
-                    <p className="text-sm font-semibold text-gray-900">{property.occupied}/{property.units}</p>
-                    <p className="text-xs text-green-600 font-medium">{occupancyRate}%</p>
+                  <div className="text-center p-2 bg-[#7fba7a]/10 rounded-[8px]">
+                    <Users className="w-4 h-4 text-[#7fba7a] mx-auto mb-1" />
+                    <p className="text-[11px] text-[#808191] dark:text-[#92939e]">Occupancy</p>
+                    <p className="text-[13px] font-semibold text-[#11142d] dark:text-[#efefef]">{property.occupied}/{property.units}</p>
+                    <p className="text-[11px] text-[#7fba7a] font-medium">{occupancyRate}%</p>
                   </div>
-                  <div className="text-center p-2 bg-purple-50 rounded-lg">
-                    <DollarSign className="w-4 h-4 text-purple-600 mx-auto mb-1" />
-                    <p className="text-xs text-gray-600">Monthly</p>
-                    <p className="text-sm font-semibold text-gray-900">${property.monthlyIncome.toLocaleString()}</p>
+                  <div className="text-center p-2 bg-[#7fba7a]/10 rounded-[8px]">
+                    <DollarSign className="w-4 h-4 text-[#7fba7a] mx-auto mb-1" />
+                    <p className="text-[11px] text-[#808191] dark:text-[#92939e]">Monthly</p>
+                    <p className="text-[13px] font-semibold text-[#11142d] dark:text-[#efefef]">${property.monthlyIncome.toLocaleString()}</p>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100">
+                <div className="pt-4 border-t border-[#e4e8ef] dark:border-[#272b30]">
                   <div className="flex gap-2">
                     <button
                       onClick={() => onViewProperty?.(property.id)}
-                      className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium text-sm"
+                      className="flex-1 px-3 py-2 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 text-[#475be8] dark:text-[#6c7ce8] rounded-[8px] hover:bg-[#475be8]/20 dark:hover:bg-[#6c7ce8]/20 transition-colors font-medium text-[13px]"
                     >
                       View Details
                     </button>
                     <button
                       onClick={() => onEditProperty?.(property.id)}
-                      className="flex-1 px-3 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
+                      className="flex-1 px-3 py-2 border border-[#e4e8ef] dark:border-[#272b30] text-[#808191] dark:text-[#92939e] rounded-[8px] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] transition-colors font-medium text-[13px]"
                     >
                       Edit
                     </button>

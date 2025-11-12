@@ -1,4 +1,7 @@
-import { Bell, Menu, Plus, Building2 } from 'lucide-react';
+import { Bell, Menu, Search } from 'lucide-react';
+import { useState } from 'react';
+import ProfileDropdown from './ProfileDropdown';
+import NotificationsPanel from './NotificationsPanel';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -8,49 +11,79 @@ interface HeaderProps {
   onProfileClick?: () => void;
 }
 
-export default function Header({ onMenuClick, onNotificationClick, onAddProperty, onAddTenant, onProfileClick }: HeaderProps) {
+export default function Header({ onMenuClick }: HeaderProps) {
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-      <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 py-4">
+    <header className="bg-[#fcfcfc] dark:bg-[#1a1d1f] border-b border-[#e4e8ef] dark:border-[#272b30] sticky top-0 z-30 h-[70px] transition-colors">
+      <div className="h-full flex items-center justify-between px-6 lg:px-8">
+        {/* Mobile Menu Button */}
         <button
           onClick={onMenuClick}
-          className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
+          className="lg:hidden p-2 hover:bg-[#f7f7f7] dark:hover:bg-[#272b30] rounded-lg transition-colors"
         >
-          <Menu className="w-6 h-6 text-gray-700" />
+          <Menu className="w-6 h-6 text-[#11142d] dark:text-[#efefef]" />
         </button>
 
-        <div className="flex-1 lg:flex-none" />
-
-        <div className="flex items-center gap-2 md:gap-3">
-          <button 
-            onClick={onAddTenant}
-            className="hidden md:flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Building2 className="w-4 h-4" />
-            <span className="font-medium">Add New Tenant</span>
-          </button>
-
-          <button 
-            onClick={onAddProperty}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            <span className="font-medium hidden sm:inline">Add New Property</span>
-            <span className="font-medium sm:hidden">Add Property</span>
-          </button>
-
-          <button onClick={onNotificationClick} className="relative p-2 hover:bg-gray-100 rounded-lg">
-            <Bell className="w-5 h-5 text-gray-700" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
-
-          <button onClick={onProfileClick} className="focus:outline-none">
-            <img
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100"
-              alt="User"
-              className="w-10 h-10 rounded-full object-cover cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
+        {/* Search Bar */}
+        <div className="flex-1 max-w-2xl mx-auto hidden md:block">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808191] dark:text-[#92939e]" />
+            <input
+              type="text"
+              placeholder="Search Property, Customer, etc..."
+              className="w-full pl-12 pr-4 py-2.5 bg-[#f4f4f4] dark:bg-[#272b30] border border-[#e4e8ef] dark:border-[#3f4447] rounded-lg text-sm text-[#11142d] dark:text-[#efefef] placeholder-[#808191] dark:placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#475be8] focus:border-[#475be8] transition-all"
             />
+          </div>
+        </div>
+
+        {/* Right Side - Notification and Profile */}
+        <div className="flex items-center gap-4 relative">
+          <button 
+            onClick={() => {
+              setShowNotifications(!showNotifications);
+              setShowProfileDropdown(false);
+            }}
+            className="relative p-2 hover:bg-[#f7f7f7] dark:hover:bg-[#272b30] rounded-lg transition-colors"
+          >
+            <Bell className="w-5 h-5 text-[#808191] dark:text-[#92939e]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#f45252] rounded-full"></span>
           </button>
+
+          {/* User Profile Info */}
+          <button
+            onClick={() => {
+              setShowProfileDropdown(!showProfileDropdown);
+              setShowNotifications(false);
+            }}
+            className="flex items-center gap-3 pl-4 border-l border-[#e4e8ef] dark:border-[#272b30] hover:opacity-80 transition-opacity"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+              alt="Profile"
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div className="hidden lg:block text-left">
+              <p className="text-sm font-semibold text-[#11142d] dark:text-[#efefef]">John Anderson</p>
+              <p className="text-xs text-[#808191] dark:text-[#92939e]">Property Manager</p>
+            </div>
+          </button>
+
+          {/* Profile Dropdown */}
+          <ProfileDropdown
+            isOpen={showProfileDropdown}
+            onClose={() => setShowProfileDropdown(false)}
+            onEditProfile={() => console.log('Edit Profile')}
+            onSettings={() => console.log('Settings')}
+            onLogout={() => console.log('Logout')}
+          />
+
+          {/* Notifications Panel */}
+          <NotificationsPanel
+            isOpen={showNotifications}
+            onClose={() => setShowNotifications(false)}
+          />
         </div>
       </div>
     </header>

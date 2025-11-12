@@ -1,4 +1,5 @@
-import { Home, Building2, Users, CreditCard, Settings, X, UserCog, LogOut, Wrench } from 'lucide-react';
+import { LayoutDashboard, Building2, Users, CreditCard, Wrench, UsersRound, Settings, LogOut } from 'lucide-react';
+import YarigaLogo from './YarigaLogo';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,18 +11,18 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { icon: Home, label: 'Dashboard', id: 'dashboard' },
+  { icon: LayoutDashboard, label: 'Dashboard', id: 'dashboard' },
   { icon: Building2, label: 'Properties', id: 'properties' },
   { icon: Users, label: 'Tenants', id: 'tenants' },
   { icon: CreditCard, label: 'Payments', id: 'payments' },
   { icon: Wrench, label: 'Maintenance', id: 'maintenance-requests' },
-  { icon: UserCog, label: 'Team', id: 'team-management' },
-  { icon: Settings, label: 'Settings', id: 'settings' },
+  { icon: UsersRound, label: 'Team', id: 'team-management' },
 ];
 
-export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAddProperty, onLogout }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onLogout }: SidebarProps) {
   return (
     <>
+      {/* Mobile overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -29,78 +30,71 @@ export default function Sidebar({ isOpen, onClose, currentPage, onNavigate, onAd
         />
       )}
 
+      {/* Sidebar */}
       <aside className={`
         fixed lg:static inset-y-0 left-0 z-50
-        w-64 bg-white border-r border-gray-200
-        transform transition-transform duration-300 ease-in-out
+        w-[250px] bg-[#fcfcfc] dark:bg-[#1a1d1f] border-r border-[#e4e8ef] dark:border-[#272b30]
+        transform transition-all duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        flex flex-col py-8 px-4
       `}>
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Home className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-gray-900">RentMate</span>
-            </div>
-            <button
-              onClick={onClose}
-              className="lg:hidden p-1 hover:bg-gray-100 rounded-lg"
-            >
-              <X className="w-5 h-5 text-gray-500" />
-            </button>
-          </div>
+        {/* Logo */}
+        <div className="mb-12 px-3">
+          <YarigaLogo />
+        </div>
 
-          <nav className="flex-1 overflow-y-auto p-4">
-            <ul className="space-y-1">
-              {menuItems.map((item) => (
-                <li key={item.label}>
-                  <button
-                    onClick={() => onNavigate(item.id)}
-                    className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg
-                    transition-all duration-200
-                    ${currentPage === item.id
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                      : 'text-gray-700 hover:bg-gray-50'
-                    }
-                  `}>
-                    <item.icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        {/* Navigation */}
+        <nav className="flex-1 flex flex-col space-y-1">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = currentPage === item.id;
+            
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  onNavigate(item.id);
+                  onClose();
+                }}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left ${
+                  isActive 
+                    ? 'bg-[#475be8] dark:bg-[#6c7ce8] text-white' 
+                    : 'text-[#808191] dark:text-[#92939e] hover:bg-[#f7f7f7] dark:hover:bg-[#272b30]'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-[16px] font-semibold">{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
 
-          <div className="p-4 border-t border-gray-200 space-y-4">
-            <button
-              onClick={onAddProperty}
-              className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-xl"
-            >
-              Add New Property
-            </button>
-
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
-              <img
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100"
-                alt="John Doe"
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div className="flex-1">
-                <div className="font-medium text-gray-900">John Doe</div>
-                <div className="text-sm text-gray-500">Homeowner</div>
-              </div>
-            </div>
-
-            <button
-              onClick={onLogout}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 font-semibold rounded-xl hover:bg-red-100 transition-all duration-200 border border-red-200"
-            >
-              <LogOut className="w-5 h-5" />
-              <span>Logout</span>
-            </button>
-          </div>
+        {/* Bottom Actions */}
+        <div className="flex flex-col space-y-1 mt-auto pt-6 border-t border-[#e4e8ef] dark:border-[#272b30] transition-colors">
+          <button 
+            onClick={() => {
+              onNavigate('settings');
+              onClose();
+            }}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left ${
+              currentPage === 'settings'
+                ? 'bg-[#475be8] dark:bg-[#6c7ce8] text-white'
+                : 'text-[#808191] dark:text-[#92939e] hover:bg-[#f7f7f7] dark:hover:bg-[#272b30]'
+            }`}
+          >
+            <Settings className="w-5 h-5" />
+            <span className="text-[16px] font-semibold">Settings</span>
+          </button>
+          <button 
+            onClick={() => {
+              onLogout && onLogout();
+              onClose();
+            }}
+            className="flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left text-[#808191] dark:text-[#92939e] hover:bg-[#f7f7f7] dark:hover:bg-[#272b30] hover:text-red-500 dark:hover:text-red-400"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="text-[16px] font-semibold">Logout</span>
+          </button>
         </div>
       </aside>
     </>

@@ -40,253 +40,255 @@ export default function TenantDashboard({ onNavigate }: TenantDashboardProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-3xl p-8 text-white shadow-xl shadow-green-600/20">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome back, {tenantData.name.split(' ')[0]}! 👋</h1>
-            <div className="flex items-center gap-2 text-green-100 mb-4">
-              <Home className="w-5 h-5" />
-              <span className="text-lg">{tenantData.property} - {tenantData.unit}</span>
-            </div>
-            <p className="text-green-100">{tenantData.address}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Rent Payment Alert */}
-      {tenantData.daysUntilDue <= 7 && tenantData.paymentStatus === 'pending' && (
-        <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-l-4 border-orange-500 rounded-xl p-6">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
-              <AlertCircle className="w-6 h-6 text-white" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Rent Payment Due Soon</h3>
-              <p className="text-gray-700 mb-3">
-                Your rent of <strong>${tenantData.rentAmount.toLocaleString()}</strong> is due on{' '}
-                <strong>{new Date(tenantData.rentDue).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong>{' '}
-                ({tenantData.daysUntilDue} days from now)
-              </p>
-              <p className="text-sm text-gray-600 mb-3">
-                Contact your landlord to arrange payment. Payments are recorded manually by the property manager.
-              </p>
-              <button 
-                onClick={() => onNavigate && onNavigate('payments')}
-                className="px-6 py-2.5 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition-all duration-200 shadow-lg shadow-orange-600/30"
-              >
-                View Payment Info
-              </button>
+    <div className="min-h-screen bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6">
+      <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6">
+        {/* Welcome Header */}
+        <div className="bg-gradient-to-r from-[#7fba7a] to-[#7fba7a]/90 rounded-[15px] md:rounded-[20px] p-6 md:p-8 text-white shadow-lg">
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-[22px] md:text-[28px] font-bold mb-2">Welcome back, {tenantData.name.split(' ')[0]}! 👋</h1>
+              <div className="flex items-center gap-2 text-white/90 mb-4">
+                <Home className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="text-[14px] md:text-[16px]">{tenantData.property} - {tenantData.unit}</span>
+              </div>
+              <p className="text-white/90 text-[12px] md:text-[13px]">{tenantData.address}</p>
             </div>
           </div>
         </div>
-      )}
 
-      {/* Quick Stats */}
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* Rent Due */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl transition-shadow">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <DollarSign className="w-6 h-6 text-white" />
-            </div>
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-              tenantData.paymentStatus === 'paid' 
-                ? 'bg-green-100 text-green-700' 
-                : 'bg-orange-100 text-orange-700'
-            }`}>
-              {tenantData.paymentStatus === 'paid' ? 'Paid' : 'Pending'}
-            </span>
-          </div>
-          <h3 className="text-gray-600 text-sm font-medium mb-1">Current Rent</h3>
-          <p className="text-3xl font-bold text-gray-900 mb-2">${tenantData.rentAmount.toLocaleString()}</p>
-          <p className="text-sm text-gray-500">Due: {new Date(tenantData.rentDue).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-        </div>
-
-        {/* Lease Info */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl transition-shadow">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
-              <Calendar className="w-6 h-6 text-white" />
+        {/* Rent Payment Alert */}
+        {tenantData.daysUntilDue <= 7 && tenantData.paymentStatus === 'pending' && (
+          <div className="bg-[#ffce73]/10 border-l-4 border-[#ffce73] rounded-[10px] md:rounded-[15px] p-4 md:p-6">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#ffce73] flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-[14px] md:text-[16px] font-bold text-[#11142d] dark:text-[#efefef] mb-1">Rent Payment Due Soon</h3>
+                <p className="text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef] mb-3">
+                  Your rent of <strong>${tenantData.rentAmount.toLocaleString()}</strong> is due on{' '}
+                  <strong>{new Date(tenantData.rentDue).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong>{' '}
+                  ({tenantData.daysUntilDue} days from now)
+                </p>
+                <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e] mb-3">
+                  Contact your landlord to arrange payment. Payments are recorded manually by the property manager.
+                </p>
+                <button 
+                  onClick={() => onNavigate && onNavigate('payments')}
+                  className="px-4 md:px-6 py-2 md:py-2.5 bg-[#ffce73] text-white font-semibold text-[12px] md:text-[13px] rounded-[8px] md:rounded-[10px] hover:opacity-90 transition-all duration-200"
+                >
+                  View Payment Info
+                </button>
+              </div>
             </div>
           </div>
-          <h3 className="text-gray-600 text-sm font-medium mb-1">Lease Expires</h3>
-          <p className="text-3xl font-bold text-gray-900 mb-2">
-            {Math.ceil((new Date(tenantData.leaseExpiry).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days
-          </p>
-          <p className="text-sm text-gray-500">{new Date(tenantData.leaseExpiry).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
-        </div>
+        )}
 
-        {/* Maintenance */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl transition-shadow">
-          <div className="flex items-start justify-between mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30">
-              <AlertCircle className="w-6 h-6 text-white" />
+        {/* Quick Stats */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
+          {/* Rent Due */}
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30] hover:shadow-lg transition-shadow">
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#475be8] dark:bg-[#6c7ce8] rounded-[8px] md:rounded-[10px] flex items-center justify-center">
+                <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </div>
+              <span className={`px-2 md:px-3 py-1 rounded-full text-[10px] md:text-[11px] font-semibold ${
+                tenantData.paymentStatus === 'paid' 
+                  ? 'bg-[#7fba7a]/10 text-[#7fba7a]' 
+                  : 'bg-[#ffce73]/10 text-[#ffce73]'
+              }`}>
+                {tenantData.paymentStatus === 'paid' ? 'Paid' : 'Pending'}
+              </span>
             </div>
+            <h3 className="text-[#808191] dark:text-[#92939e] text-[12px] md:text-[13px] font-medium mb-1">Current Rent</h3>
+            <p className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] mb-2">${tenantData.rentAmount.toLocaleString()}</p>
+            <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">Due: {new Date(tenantData.rentDue).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
           </div>
-          <h3 className="text-gray-600 text-sm font-medium mb-1">Active Requests</h3>
-          <p className="text-3xl font-bold text-gray-900 mb-2">
-            {maintenanceRequests.filter(r => r.status !== 'completed').length}
-          </p>
-          <p className="text-sm text-gray-500">Maintenance requests</p>
+
+          {/* Lease Info */}
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30] hover:shadow-lg transition-shadow">
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#7c5dfa] rounded-[8px] md:rounded-[10px] flex items-center justify-center">
+                <Calendar className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </div>
+            </div>
+            <h3 className="text-[#808191] dark:text-[#92939e] text-[12px] md:text-[13px] font-medium mb-1">Lease Expires</h3>
+            <p className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] mb-2">
+              {Math.ceil((new Date(tenantData.leaseExpiry).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))} days
+            </p>
+            <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{new Date(tenantData.leaseExpiry).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+          </div>
+
+          {/* Maintenance */}
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30] hover:shadow-lg transition-shadow">
+            <div className="flex items-start justify-between mb-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#ffce73] rounded-[8px] md:rounded-[10px] flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              </div>
+            </div>
+            <h3 className="text-[#808191] dark:text-[#92939e] text-[12px] md:text-[13px] font-medium mb-1">Active Requests</h3>
+            <p className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] mb-2">
+              {maintenanceRequests.filter(r => r.status !== 'completed').length}
+            </p>
+            <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">Maintenance requests</p>
+          </div>
         </div>
-      </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button 
-            onClick={() => onNavigate && onNavigate('payments')}
-            className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-all group"
-          >
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-500 transition-colors">
-              <CreditCard className="w-5 h-5 text-green-600 group-hover:text-white" />
-            </div>
-            <span className="font-semibold text-gray-900">View Payments</span>
-          </button>
-
-          <button 
-            onClick={() => onNavigate && onNavigate('maintenance')}
-            className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all group"
-          >
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition-colors">
-              <AlertCircle className="w-5 h-5 text-orange-600 group-hover:text-white" />
-            </div>
-            <span className="font-semibold text-gray-900">Submit Request</span>
-          </button>
-
-          <button 
-            onClick={() => onNavigate && onNavigate('lease')}
-            className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all group"
-          >
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-500 transition-colors">
-              <FileText className="w-5 h-5 text-blue-600 group-hover:text-white" />
-            </div>
-            <span className="font-semibold text-gray-900">View Lease</span>
-          </button>
-
-          <button 
-            onClick={() => onNavigate && onNavigate('profile')}
-            className="flex items-center gap-3 p-4 rounded-xl border-2 border-gray-200 hover:border-purple-500 hover:bg-purple-50 transition-all group"
-          >
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-500 transition-colors">
-              <MessageSquare className="w-5 h-5 text-purple-600 group-hover:text-white" />
-            </div>
-            <span className="font-semibold text-gray-900">My Profile</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Recent Payments */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Recent Payments</h2>
+        {/* Quick Actions */}
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30]">
+          <h2 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">Quick Actions</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <button 
               onClick={() => onNavigate && onNavigate('payments')}
-              className="text-sm font-semibold text-green-600 hover:text-green-700"
+              className="flex items-center gap-3 p-3 md:p-4 rounded-[8px] md:rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:border-[#7fba7a] hover:bg-[#7fba7a]/5 transition-all group"
             >
-              View All
-            </button>
-          </div>
-          <div className="space-y-4">
-            {recentPayments.map((payment) => (
-              <div key={payment.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <CreditCard className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">${payment.amount.toLocaleString()}</p>
-                    <p className="text-sm text-gray-500">{payment.method}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold mb-1">
-                    {payment.status}
-                  </span>
-                  <p className="text-sm text-gray-500">{new Date(payment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
-                </div>
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#7fba7a]/10 rounded-[6px] md:rounded-[8px] flex items-center justify-center group-hover:bg-[#7fba7a] transition-colors">
+                <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-[#7fba7a] group-hover:text-white" />
               </div>
-            ))}
-          </div>
-        </div>
+              <span className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">View Payments</span>
+            </button>
 
-        {/* Maintenance Requests */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">Maintenance Requests</h2>
             <button 
               onClick={() => onNavigate && onNavigate('maintenance')}
-              className="text-sm font-semibold text-green-600 hover:text-green-700"
+              className="flex items-center gap-3 p-3 md:p-4 rounded-[8px] md:rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:border-[#ffce73] hover:bg-[#ffce73]/5 transition-all group"
             >
-              View All
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#ffce73]/10 rounded-[6px] md:rounded-[8px] flex items-center justify-center group-hover:bg-[#ffce73] transition-colors">
+                <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-[#ffce73] group-hover:text-white" />
+              </div>
+              <span className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">Submit Request</span>
+            </button>
+
+            <button 
+              onClick={() => onNavigate && onNavigate('lease')}
+              className="flex items-center gap-3 p-3 md:p-4 rounded-[8px] md:rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:border-[#475be8] hover:bg-[#475be8]/5 transition-all group"
+            >
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#475be8]/10 rounded-[6px] md:rounded-[8px] flex items-center justify-center group-hover:bg-[#475be8] dark:group-hover:bg-[#6c7ce8] transition-colors">
+                <FileText className="w-4 h-4 md:w-5 md:h-5 text-[#475be8] dark:text-[#6c7ce8] group-hover:text-white" />
+              </div>
+              <span className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">View Lease</span>
+            </button>
+
+            <button 
+              onClick={() => onNavigate && onNavigate('profile')}
+              className="flex items-center gap-3 p-3 md:p-4 rounded-[8px] md:rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:border-[#7c5dfa] hover:bg-[#7c5dfa]/5 transition-all group"
+            >
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#7c5dfa]/10 rounded-[6px] md:rounded-[8px] flex items-center justify-center group-hover:bg-[#7c5dfa] transition-colors">
+                <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-[#7c5dfa] group-hover:text-white" />
+              </div>
+              <span className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">My Profile</span>
             </button>
           </div>
-          <div className="space-y-4">
-            {maintenanceRequests.map((request) => (
-              <div key={request.id} className="p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
+          {/* Recent Payments */}
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30]">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef]">Recent Payments</h2>
+              <button 
+                onClick={() => onNavigate && onNavigate('payments')}
+                className="text-[12px] md:text-[13px] font-semibold text-[#7fba7a] hover:opacity-80"
+              >
+                View All
+              </button>
+            </div>
+            <div className="space-y-3 md:space-y-4">
+              {recentPayments.map((payment) => (
+                <div key={payment.id} className="flex items-center justify-between p-3 md:p-4 rounded-[8px] md:rounded-[10px] bg-[#f4f4f4] dark:bg-[#111315] hover:bg-[#e4e8ef] dark:hover:bg-[#272b30] transition-colors">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-[#7fba7a]/10 rounded-[6px] md:rounded-[8px] flex items-center justify-center">
+                      <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-[#7fba7a]" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">${payment.amount.toLocaleString()}</p>
+                      <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{payment.method}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="inline-block px-2 md:px-3 py-1 bg-[#7fba7a]/10 text-[#7fba7a] rounded-full text-[10px] md:text-[11px] font-semibold mb-1">
+                      {payment.status}
+                    </span>
+                    <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{new Date(payment.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Maintenance Requests */}
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30]">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef]">Maintenance Requests</h2>
+              <button 
+                onClick={() => onNavigate && onNavigate('maintenance')}
+                className="text-[12px] md:text-[13px] font-semibold text-[#7fba7a] hover:opacity-80"
+              >
+                View All
+              </button>
+            </div>
+            <div className="space-y-3 md:space-y-4">
+              {maintenanceRequests.map((request) => (
+                <div key={request.id} className="p-3 md:p-4 rounded-[8px] md:rounded-[10px] bg-[#f4f4f4] dark:bg-[#111315] hover:bg-[#e4e8ef] dark:hover:bg-[#272b30] transition-colors">
+                  <div className="flex items-start justify-between mb-2">
+                    <p className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">{request.title}</p>
+                    <span className={`inline-block px-2 py-1 rounded-full text-[10px] md:text-[11px] font-semibold ${
+                      request.status === 'completed' 
+                        ? 'bg-[#7fba7a]/10 text-[#7fba7a]' 
+                        : request.status === 'in-progress'
+                        ? 'bg-[#475be8]/10 text-[#475be8] dark:text-[#6c7ce8]'
+                        : 'bg-[#e4e8ef] dark:bg-[#272b30] text-[#808191] dark:text-[#92939e]'
+                    }`}>
+                      {request.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4 text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                      {new Date(request.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-[10px] md:text-[11px] ${
+                      request.priority === 'high' 
+                        ? 'bg-[#f45252]/10 text-[#f45252]' 
+                        : request.priority === 'medium'
+                        ? 'bg-[#ffce73]/10 text-[#ffce73]'
+                        : 'bg-[#e4e8ef] dark:bg-[#272b30] text-[#808191] dark:text-[#92939e]'
+                    }`}>
+                      {request.priority}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Announcements */}
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 border border-[#e4e8ef] dark:border-[#272b30]">
+          <h2 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">Property Announcements</h2>
+          <div className="space-y-3">
+            {announcements.map((announcement) => (
+              <div key={announcement.id} className="p-3 md:p-4 rounded-[8px] md:rounded-[10px] bg-[#475be8]/5 border border-[#475be8]/20">
                 <div className="flex items-start justify-between mb-2">
-                  <p className="font-semibold text-gray-900">{request.title}</p>
-                  <span className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
-                    request.status === 'completed' 
-                      ? 'bg-green-100 text-green-700' 
-                      : request.status === 'in-progress'
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}>
-                    {request.status}
-                  </span>
+                  <h3 className="font-semibold text-[12px] md:text-[13px] text-[#11142d] dark:text-[#efefef]">{announcement.title}</h3>
+                  <span className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{new Date(announcement.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
-                  <span className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    {new Date(request.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </span>
-                  <span className={`px-2 py-0.5 rounded ${
-                    request.priority === 'high' 
-                      ? 'bg-red-100 text-red-700' 
-                      : request.priority === 'medium'
-                      ? 'bg-orange-100 text-orange-700'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}>
-                    {request.priority}
-                  </span>
-                </div>
+                <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{announcement.message}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Announcements */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Property Announcements</h2>
-        <div className="space-y-3">
-          {announcements.map((announcement) => (
-            <div key={announcement.id} className="p-4 rounded-xl bg-blue-50 border border-blue-100">
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold text-gray-900">{announcement.title}</h3>
-                <span className="text-sm text-gray-500">{new Date(announcement.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-              </div>
-              <p className="text-gray-700">{announcement.message}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Landlord Contact */}
-      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-xl">
-        <h2 className="text-xl font-bold mb-4">Need Help?</h2>
-        <p className="text-gray-300 mb-4">Contact your property manager</p>
-        <div className="space-y-2">
-          <p className="flex items-center gap-2">
-            <span className="font-semibold">{tenantData.landlord.name}</span>
-          </p>
-          <p className="text-gray-300">{tenantData.landlord.phone}</p>
-          <p className="text-gray-300">{tenantData.landlord.email}</p>
+        {/* Landlord Contact */}
+        <div className="bg-gradient-to-br from-[#11142d] to-[#11142d]/90 dark:from-[#1a1d1f] dark:to-[#1a1d1f]/90 rounded-[10px] md:rounded-[15px] p-4 md:p-6 text-white border border-[#272b30]">
+          <h2 className="text-[16px] md:text-[18px] font-bold mb-4">Need Help?</h2>
+          <p className="text-white/70 text-[12px] md:text-[13px] mb-4">Contact your property manager</p>
+          <div className="space-y-2">
+            <p className="flex items-center gap-2">
+              <span className="font-semibold text-[13px] md:text-[14px]">{tenantData.landlord.name}</span>
+            </p>
+            <p className="text-white/70 text-[12px] md:text-[13px]">{tenantData.landlord.phone}</p>
+            <p className="text-white/70 text-[12px] md:text-[13px]">{tenantData.landlord.email}</p>
+          </div>
         </div>
       </div>
     </div>

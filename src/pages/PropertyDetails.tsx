@@ -94,33 +94,33 @@ export default function PropertyDetails({ propertyId, onBack, onEdit, onAssignTe
   const occupancyRate = Math.round((property.occupiedUnits / property.totalUnits) * 100);
 
   return (
-    <div className="space-y-6">
+    <div className="h-full bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6 overflow-y-auto transition-colors">
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-4 md:mb-6">
         <button
           onClick={onBack}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] rounded-[8px] transition-colors"
         >
-          <ArrowLeft className="w-6 h-6 text-gray-600" />
+          <ArrowLeft className="w-6 h-6 text-[#808191] dark:text-[#92939e]" />
         </button>
         <div className="flex-1">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{property.name}</h1>
-          <div className="flex items-center gap-2 text-gray-600">
+          <h1 className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{property.name}</h1>
+          <div className="flex items-center gap-2 text-[#808191] dark:text-[#92939e] mt-1">
             <MapPin className="w-4 h-4" />
-            <span>{property.address}</span>
+            <span className="text-[13px]">{property.address}</span>
           </div>
         </div>
         <button
           onClick={onEdit}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-medium"
+          className="flex items-center gap-2 px-4 py-2 border border-[#e4e8ef] dark:border-[#272b30] text-[#808191] dark:text-[#92939e] rounded-[8px] hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] transition-all font-medium text-[14px]"
         >
-          <Edit className="w-5 h-5" />
+          <Edit className="w-4 h-4 md:w-5 md:h-5" />
           <span className="hidden sm:inline">Edit Property</span>
         </button>
       </div>
 
       {/* Property Image */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] overflow-hidden mb-4 md:mb-6 transition-colors">
         <img
           src={property.image}
           alt={property.name}
@@ -129,68 +129,68 @@ export default function PropertyDetails({ propertyId, onBack, onEdit, onAssignTe
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 border border-[#e4e8ef] dark:border-[#272b30] transition-colors">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <Home className="w-6 h-6 text-blue-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 flex items-center justify-center">
+              <Home className="w-5 h-5 text-[#475be8] dark:text-[#6c7ce8]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Property Type</p>
-              <p className="text-lg font-bold text-gray-900">{property.type}</p>
+              <p className="text-[12px] md:text-[14px] text-[#808191] dark:text-[#92939e] transition-colors">Property Type</p>
+              <p className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{property.type}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 border border-[#e4e8ef] dark:border-[#272b30] transition-colors">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-green-50 rounded-lg">
-              <Users className="w-6 h-6 text-green-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <Users className="w-5 h-5 text-[#7fba7a]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Occupancy</p>
-              <p className="text-lg font-bold text-gray-900">{property.occupiedUnits}/{property.totalUnits}</p>
-              <p className="text-xs text-green-600 font-semibold">{occupancyRate}% Occupied</p>
+              <p className="text-[12px] md:text-[14px] text-[#808191] dark:text-[#92939e] transition-colors">Occupancy</p>
+              <p className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{property.occupiedUnits}/{property.totalUnits}</p>
+              <p className="text-[11px] text-[#7fba7a] font-semibold">{occupancyRate}% Occupied</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 border border-[#e4e8ef] dark:border-[#272b30] transition-colors">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-purple-50 rounded-lg">
-              <DollarSign className="w-6 h-6 text-purple-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <DollarSign className="w-5 h-5 text-[#7fba7a]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Monthly Income</p>
-              <p className="text-lg font-bold text-gray-900">${property.monthlyIncome.toLocaleString()}</p>
+              <p className="text-[12px] md:text-[14px] text-[#808191] dark:text-[#92939e] transition-colors">Monthly Income</p>
+              <p className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">${property.monthlyIncome.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 border border-[#e4e8ef] dark:border-[#272b30] transition-colors">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-orange-50 rounded-lg">
-              <Home className="w-6 h-6 text-orange-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#ffce73]/10 flex items-center justify-center">
+              <Home className="w-5 h-5 text-[#ffce73]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Available Units</p>
-              <p className="text-lg font-bold text-gray-900">{property.availableUnits}</p>
+              <p className="text-[12px] md:text-[14px] text-[#808191] dark:text-[#92939e] transition-colors">Available Units</p>
+              <p className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{property.availableUnits}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Description */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-3">Description & Amenities</h2>
-        <p className="text-gray-600">{property.description}</p>
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] p-4 md:p-6 mb-4 md:mb-6 transition-colors">
+        <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-3 transition-colors">Description & Amenities</h2>
+        <p className="text-[14px] text-[#808191] dark:text-[#92939e] transition-colors">{property.description}</p>
       </div>
 
       {/* Units List */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Units & Tenants</h2>
-          <p className="text-sm text-gray-600 mt-1">
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] p-4 md:p-6 transition-colors">
+        <div className="mb-4 md:mb-6">
+          <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Units & Tenants</h2>
+          <p className="text-[13px] text-[#808191] dark:text-[#92939e] mt-1 transition-colors">
             All rental units in this property. Edit property to add or remove units.
           </p>
         </div>
@@ -199,49 +199,49 @@ export default function PropertyDetails({ propertyId, onBack, onEdit, onAssignTe
           {property.units.map((unit) => (
             <div
               key={unit.id}
-              className="border border-gray-200 rounded-xl p-5 hover:shadow-md transition-all"
+              className="border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] p-4 md:p-5 hover:shadow-md transition-all bg-[#f4f4f4] dark:bg-[#111315]"
             >
               <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                 {/* Unit Info */}
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-bold text-gray-900">{unit.unitNumber}</h3>
-                    <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                    <h3 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">{unit.unitNumber}</h3>
+                    <span className={`px-3 py-1 text-[11px] font-semibold rounded-full flex items-center gap-1 ${
                       unit.isOccupied
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'bg-green-100 text-green-700'
+                        ? 'bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 text-[#475be8] dark:text-[#6c7ce8]'
+                        : 'bg-[#7fba7a]/10 text-[#7fba7a]'
                     }`}>
                       {unit.isOccupied ? (
-                        <span className="flex items-center gap-1">
+                        <>
                           <XCircle className="w-3 h-3" />
                           Occupied
-                        </span>
+                        </>
                       ) : (
-                        <span className="flex items-center gap-1">
+                        <>
                           <CheckCircle className="w-3 h-3" />
                           Available
-                        </span>
+                        </>
                       )}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-3">{unit.type}</p>
+                  <p className="text-[13px] text-[#808191] dark:text-[#92939e] mb-3 transition-colors">{unit.type}</p>
                   
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[13px]">
                     <div>
-                      <span className="text-gray-500">Bedrooms:</span>
-                      <span className="ml-1 font-semibold text-gray-900">{unit.bedrooms}</span>
+                      <span className="text-[#808191] dark:text-[#92939e]">Bedrooms:</span>
+                      <span className="ml-1 font-semibold text-[#11142d] dark:text-[#efefef]">{unit.bedrooms}</span>
                     </div>
                     <div>
-                      <span className="text-gray-500">Bathrooms:</span>
-                      <span className="ml-1 font-semibold text-gray-900">{unit.bathrooms}</span>
+                      <span className="text-[#808191] dark:text-[#92939e]">Bathrooms:</span>
+                      <span className="ml-1 font-semibold text-[#11142d] dark:text-[#efefef]">{unit.bathrooms}</span>
                     </div>
                     <div>
-                      <span className="text-gray-500">Size:</span>
-                      <span className="ml-1 font-semibold text-gray-900">{unit.squareFootage} sqft</span>
+                      <span className="text-[#808191] dark:text-[#92939e]">Size:</span>
+                      <span className="ml-1 font-semibold text-[#11142d] dark:text-[#efefef]">{unit.squareFootage} sqft</span>
                     </div>
                     <div>
-                      <span className="text-gray-500">Rent:</span>
-                      <span className="ml-1 font-bold text-green-600">${unit.rent}/mo</span>
+                      <span className="text-[#808191] dark:text-[#92939e]">Rent:</span>
+                      <span className="ml-1 font-bold text-[#7fba7a]">${unit.rent}/mo</span>
                     </div>
                   </div>
                 </div>
@@ -250,36 +250,36 @@ export default function PropertyDetails({ propertyId, onBack, onEdit, onAssignTe
                 {unit.tenant ? (
                   <div 
                     onClick={() => onViewTenant?.(unit.tenant.id)}
-                    className="lg:w-80 p-4 bg-blue-50 rounded-lg border border-blue-200 cursor-pointer hover:bg-blue-100 hover:border-blue-300 transition-all"
+                    className="lg:w-80 p-4 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[10px] border border-[#475be8]/20 dark:border-[#6c7ce8]/20 cursor-pointer hover:bg-[#475be8]/15 dark:hover:bg-[#6c7ce8]/15 transition-all"
                   >
-                    <p className="text-xs font-semibold text-blue-700 uppercase mb-2">Current Tenant</p>
-                    <p className="font-bold text-gray-900 mb-2">{unit.tenant.name}</p>
-                    <div className="space-y-1 text-sm">
-                      <div className="flex items-center gap-2 text-gray-600">
+                    <p className="text-[11px] font-semibold text-[#475be8] dark:text-[#6c7ce8] uppercase mb-2 transition-colors">Current Tenant</p>
+                    <p className="font-bold text-[#11142d] dark:text-[#efefef] mb-2 text-[15px] transition-colors">{unit.tenant.name}</p>
+                    <div className="space-y-1 text-[13px]">
+                      <div className="flex items-center gap-2 text-[#808191] dark:text-[#92939e]">
                         <Mail className="w-4 h-4" />
                         <span>{unit.tenant.email}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-600">
+                      <div className="flex items-center gap-2 text-[#808191] dark:text-[#92939e]">
                         <Phone className="w-4 h-4" />
                         <span>{unit.tenant.phone}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-600">
+                      <div className="flex items-center gap-2 text-[#808191] dark:text-[#92939e]">
                         <Calendar className="w-4 h-4" />
                         <span>Lease ends: {unit.tenant.leaseEnd}</span>
                       </div>
                     </div>
-                    <div className="mt-3 pt-3 border-t border-blue-200">
-                      <span className="text-xs text-blue-600 font-medium">Click to view details →</span>
+                    <div className="mt-3 pt-3 border-t border-[#475be8]/20 dark:border-[#6c7ce8]/20">
+                      <span className="text-[12px] text-[#475be8] dark:text-[#6c7ce8] font-medium">Click to view details →</span>
                     </div>
                   </div>
                 ) : (
-                  <div className="lg:w-80 p-4 bg-green-50 rounded-lg border border-green-200">
-                    <p className="text-sm text-green-700 font-medium mb-2">
+                  <div className="lg:w-80 p-4 bg-[#7fba7a]/10 rounded-[10px] border border-[#7fba7a]/20">
+                    <p className="text-[13px] text-[#7fba7a] font-medium mb-2">
                       ✓ Ready to rent
                     </p>
                     <button
                       onClick={() => onAssignTenant?.(unit.id)}
-                      className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium text-sm"
+                      className="w-full px-4 py-2 bg-[#7fba7a] text-white rounded-[8px] hover:bg-[#6fa969] transition-all font-medium text-[14px]"
                     >
                       Assign Tenant
                     </button>

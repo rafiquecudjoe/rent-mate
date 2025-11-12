@@ -312,7 +312,7 @@ function App() {
   // Landlord Portal
   if (userRole === 'landlord') {
     return (
-      <div className="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 flex overflow-hidden">
+      <div className="h-screen bg-gray-50 flex overflow-hidden">
         <Sidebar
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
@@ -337,10 +337,8 @@ function App() {
             onProfileClick={() => setCurrentPage('settings')}
           />
 
-          <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto overflow-x-hidden">
-            <div className="max-w-7xl mx-auto">
-              {renderLandlordPage()}
-            </div>
+          <main className="flex-1 overflow-y-auto overflow-x-hidden">
+            {renderLandlordPage()}
           </main>
         </div>
 

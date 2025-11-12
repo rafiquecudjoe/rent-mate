@@ -1,4 +1,4 @@
-import { ArrowLeft, Mail, Phone, MapPin, Calendar, DollarSign, FileText, Home, CreditCard, AlertCircle, CheckCircle, MessageSquare, Send, X, RefreshCw, Eye, Download } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, MapPin, Calendar, DollarSign, FileText, Home, CreditCard, AlertCircle, CheckCircle, MessageSquare, Send, X, RefreshCw, Eye, Download, Wrench } from 'lucide-react';
 import { useState } from 'react';
 import LeaseRenewalModal, { RenewalData } from '../components/LeaseRenewalModal';
 
@@ -85,44 +85,41 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="h-full bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6 overflow-y-auto transition-colors">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4 md:mb-6">
           <button
             onClick={onBack}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] rounded-[8px] transition-colors"
           >
-            <ArrowLeft className="w-6 h-6 text-gray-600" />
+            <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-[#808191] dark:text-[#92939e]" />
           </button>
           <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Tenant Details</h1>
-            <p className="text-gray-600 mt-1">Complete tenant information and history</p>
+            <h1 className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Tenant Details</h1>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setShowContactModal(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium flex items-center gap-2"
+              className="px-3 md:px-4 py-2 bg-[#475be8] dark:bg-[#6c7ce8] text-white rounded-[8px] hover:bg-[#3d4ec7] dark:hover:bg-[#5a6dd6] transition-all font-semibold flex items-center gap-2 text-[13px] md:text-[14px]"
             >
               <Phone className="w-4 h-4" />
               Contact
             </button>
             <button
               onClick={() => setShowRenewalModal(true)}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium flex items-center gap-2"
+              className="px-3 md:px-4 py-2 bg-[#7fba7a] text-white rounded-[8px] hover:bg-[#6fa969] transition-all font-semibold flex items-center gap-2 text-[13px] md:text-[14px]"
             >
               <RefreshCw className="w-4 h-4" />
               Renew/Extend
             </button>
             <button
               onClick={() => {
-                // Auto-detect which lease template to use based on tenant status
                 if (tenant.lease.status === 'active') {
-                  // For active leases, default to standard residential
                   setLeaseTemplate('Standard Residential Lease');
                 }
                 setShowLeaseModal(true);
               }}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all font-medium flex items-center gap-2"
+              className="px-3 md:px-4 py-2 bg-[#475be8] dark:bg-[#6c7ce8] text-white rounded-[8px] hover:bg-[#3d4ec7] dark:hover:bg-[#5a6dd6] transition-all font-semibold flex items-center gap-2 text-[13px] md:text-[14px]"
             >
               <FileText className="w-4 h-4" />
               Send Document
@@ -131,16 +128,16 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
         </div>
 
       {/* Tenant Profile Card */}
-      <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-8 text-white">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-[#475be8] dark:bg-[#6c7ce8] rounded-[10px] md:rounded-[15px] p-6 md:p-8 text-white transition-colors border border-[#475be8] dark:border-[#6c7ce8]">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
           <img
             src={tenant.photo}
             alt={tenant.name}
-            className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-[10px] border-4 border-white shadow-lg object-cover"
           />
           <div className="flex-1">
-            <h2 className="text-3xl font-bold mb-2">{tenant.name}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-blue-50">
+            <h2 className="text-[22px] md:text-[28px] font-bold mb-2 md:mb-3">{tenant.name}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 text-white/90 text-[13px] md:text-[14px]">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 <span>{tenant.email}</span>
@@ -159,11 +156,11 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
               </div>
             </div>
           </div>
-          <div className="text-center md:text-right">
-            <span className={`inline-flex px-4 py-2 rounded-full text-sm font-semibold ${
+          <div className="text-left md:text-right">
+            <span className={`inline-flex px-3 md:px-4 py-1.5 md:py-2 rounded-[8px] text-[12px] md:text-[13px] font-semibold ${
               tenant.lease.status === 'active' 
-                ? 'bg-white text-blue-600' 
-                : 'bg-yellow-100 text-yellow-800'
+                ? 'bg-white text-[#475be8] dark:text-[#6c7ce8]' 
+                : 'bg-[#ffce73]/20 text-[#ffce73]'
             }`}>
               {tenant.lease.status === 'active' ? 'Active Lease' : 'Lease Expiring'}
             </span>
@@ -172,120 +169,119 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <DollarSign className="w-6 h-6 text-green-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-[#7fba7a]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Monthly Rent</p>
-              <p className="text-2xl font-bold text-gray-900">${tenant.lease.monthlyRent.toLocaleString()}</p>
+              <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e]">Monthly Rent</p>
+              <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef]">${tenant.lease.monthlyRent.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <CreditCard className="w-6 h-6 text-blue-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 flex items-center justify-center">
+              <CreditCard className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Paid</p>
-              <p className="text-2xl font-bold text-gray-900">${totalPaid.toLocaleString()}</p>
+              <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e]">Total Paid</p>
+              <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef]">${totalPaid.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <CheckCircle className="w-6 h-6 text-purple-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#7fba7a]/10 flex items-center justify-center">
+              <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-[#7fba7a]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Payment Rate</p>
-              <p className="text-2xl font-bold text-gray-900">{paymentRate}%</p>
+              <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e]">Payment Rate</p>
+              <p className="text-[20px] md:text-[24px] font-bold text-[#11142d] dark:text-[#efefef]">{paymentRate}%</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-5 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <Calendar className="w-6 h-6 text-orange-600" />
+            <div className="w-10 h-10 rounded-[8px] bg-[#ffce73]/10 flex items-center justify-center">
+              <Calendar className="w-5 h-5 md:w-6 md:h-6 text-[#ffce73]" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Lease Ends</p>
-              <p className="text-lg font-bold text-gray-900">{tenant.lease.endDate}</p>
+              <p className="text-[12px] md:text-[14px] font-medium text-[#808191] dark:text-[#92939e]">Lease Ends</p>
+              <p className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef]">{tenant.lease.endDate}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Lease Information */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <FileText className="w-6 h-6 text-blue-600" />
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+          <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4 md:mb-6 flex items-center gap-2">
+            <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
             Lease Information
           </h2>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">Property</span>
-              <span className="font-semibold text-gray-900">{tenant.property.name}</span>
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-[#e4e8ef] dark:border-[#272b30]">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Property</span>
+              <span className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{tenant.property.name}</span>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">Unit</span>
-              <span className="font-semibold text-gray-900">{tenant.property.unit}</span>
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-[#e4e8ef] dark:border-[#272b30]">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Unit</span>
+              <span className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{tenant.property.unit}</span>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">Lease Start</span>
-              <span className="font-semibold text-gray-900">{tenant.lease.startDate}</span>
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-[#e4e8ef] dark:border-[#272b30]">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Lease Start</span>
+              <span className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{tenant.lease.startDate}</span>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">Lease End</span>
-              <span className="font-semibold text-gray-900">{tenant.lease.endDate}</span>
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-[#e4e8ef] dark:border-[#272b30]">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Lease End</span>
+              <span className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{tenant.lease.endDate}</span>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-100">
-              <span className="text-gray-600">Monthly Rent</span>
-              <span className="font-bold text-green-600">${tenant.lease.monthlyRent.toLocaleString()}</span>
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-[#e4e8ef] dark:border-[#272b30]">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Monthly Rent</span>
+              <span className="font-bold text-[13px] md:text-[14px] text-[#7fba7a]">${tenant.lease.monthlyRent.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between items-center py-3">
-              <span className="text-gray-600">Security Deposit</span>
-              <span className="font-semibold text-gray-900">${tenant.lease.securityDeposit.toLocaleString()}</span>
+            <div className="flex justify-between items-center py-2 md:py-3">
+              <span className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">Security Deposit</span>
+              <span className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">${tenant.lease.securityDeposit.toLocaleString()}</span>
             </div>
           </div>
         </div>
 
         {/* Documents */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <FileText className="w-6 h-6 text-blue-600" />
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+          <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4 md:mb-6 flex items-center gap-2">
+            <FileText className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
             Documents
           </h2>
           <div className="space-y-3">
             {tenant.documents.map((doc) => (
               <div
                 key={doc.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] hover:bg-[#e4e8ef] dark:hover:bg-[#1a1d1f] transition-colors cursor-pointer border border-[#e4e8ef] dark:border-[#272b30]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <FileText className="w-5 h-5 text-blue-600" />
+                  <div className="p-2 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px]">
+                    <FileText className="w-4 h-4 md:w-5 md:h-5 text-[#475be8] dark:text-[#6c7ce8]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">{doc.name}</p>
-                    <p className="text-sm text-gray-500">{doc.size} • {doc.uploadDate}</p>
+                    <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{doc.name}</p>
+                    <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{doc.size} • {doc.uploadDate}</p>
                   </div>
                 </div>
                 <button 
                   onClick={() => {
-                    // In production, this would open the document
                     alert(`Opening ${doc.name}`);
                     console.log('View document:', doc);
                   }}
-                  className="px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  className="px-3 md:px-4 py-1.5 md:py-2 text-[12px] md:text-[13px] font-semibold text-[#475be8] dark:text-[#6c7ce8] hover:bg-[#475be8]/10 dark:hover:bg-[#6c7ce8]/10 rounded-[8px] transition-colors"
                 >
                   View
                 </button>
@@ -296,45 +292,90 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
       </div>
 
       {/* Payment History */}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-          <CreditCard className="w-6 h-6 text-blue-600" />
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+        <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4 md:mb-6 flex items-center gap-2">
+          <DollarSign className="w-5 h-5 md:w-6 md:h-6 text-[#7fba7a]" />
           Payment History
         </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Date</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Amount</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Method</th>
-                <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tenant.paymentHistory.map((payment) => (
-                <tr key={payment.id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="py-4 px-4 text-gray-900">{payment.date}</td>
-                  <td className="py-4 px-4 font-semibold text-gray-900">${payment.amount.toLocaleString()}</td>
-                  <td className="py-4 px-4 text-gray-600">{payment.method}</td>
-                  <td className="py-4 px-4">
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${
-                      payment.status === 'paid'
-                        ? 'bg-green-100 text-green-700'
-                        : payment.status === 'pending'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
-                    }`}>
-                      {payment.status === 'paid' && <CheckCircle className="w-3 h-3" />}
-                      {payment.status === 'pending' && <AlertCircle className="w-3 h-3" />}
-                      {payment.status === 'overdue' && <AlertCircle className="w-3 h-3" />}
-                      {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="space-y-3">
+          {tenant.paymentHistory.map((payment) => (
+            <div
+              key={payment.id}
+              className="flex items-center justify-between p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:bg-[#e4e8ef] dark:hover:bg-[#1a1d1f] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className={`p-2 rounded-[8px] ${
+                  payment.status === 'Paid' 
+                    ? 'bg-[#7fba7a]/10' 
+                    : payment.status === 'Pending'
+                    ? 'bg-[#ffce73]/10'
+                    : 'bg-[#f45252]/10'
+                }`}>
+                  <DollarSign className={`w-4 h-4 md:w-5 md:h-5 ${
+                    payment.status === 'Paid' 
+                      ? 'text-[#7fba7a]' 
+                      : payment.status === 'Pending'
+                      ? 'text-[#ffce73]'
+                      : 'text-[#f45252]'
+                  }`} />
+                </div>
+                <div>
+                  <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">${payment.amount.toLocaleString()}</p>
+                  <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{payment.date}</p>
+                </div>
+              </div>
+              <span className={`px-3 py-1 rounded-[8px] text-[11px] md:text-[12px] font-semibold ${
+                payment.status === 'Paid' 
+                  ? 'bg-[#7fba7a]/10 text-[#7fba7a]' 
+                  : payment.status === 'Pending'
+                  ? 'bg-[#ffce73]/10 text-[#ffce73]'
+                  : 'bg-[#f45252]/10 text-[#f45252]'
+              }`}>
+                {payment.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Maintenance Requests */}
+      <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+        <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-4 md:mb-6 flex items-center gap-2">
+          <Wrench className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
+          Maintenance Requests
+        </h2>
+        <div className="space-y-3">
+          {tenant.maintenanceRequests.map((request) => (
+            <div
+              key={request.id}
+              className="p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] border border-[#e4e8ef] dark:border-[#272b30] hover:bg-[#e4e8ef] dark:hover:bg-[#1a1d1f] transition-colors"
+            >
+              <div className="flex items-start justify-between mb-2">
+                <h3 className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{request.issue}</h3>
+                <div className="flex gap-2">
+                  <span className={`px-2 py-0.5 rounded-[6px] text-[11px] font-semibold ${
+                    request.priority === 'High' 
+                      ? 'bg-[#f45252]/10 text-[#f45252]'
+                      : request.priority === 'Medium'
+                      ? 'bg-[#ffce73]/10 text-[#ffce73]'
+                      : 'bg-[#7fba7a]/10 text-[#7fba7a]'
+                  }`}>
+                    {request.priority}
+                  </span>
+                  <span className={`px-2 py-0.5 rounded-[6px] text-[11px] font-semibold ${
+                    request.status === 'Open' 
+                      ? 'bg-[#475be8]/10 text-[#475be8] dark:bg-[#6c7ce8]/10 dark:text-[#6c7ce8]'
+                      : request.status === 'In Progress'
+                      ? 'bg-[#ffce73]/10 text-[#ffce73]'
+                      : 'bg-[#7fba7a]/10 text-[#7fba7a]'
+                  }`}>
+                    {request.status}
+                  </span>
+                </div>
+              </div>
+              <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">{request.date}</p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -384,44 +425,44 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
     {/* Contact Modal */}
     {showContactModal && (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+      <div className="fixed inset-0 bg-black/40 dark:bg-black/60 flex items-center justify-center z-50 p-4">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[15px] md:rounded-[20px] shadow-xl max-w-md w-full p-6 md:p-8 border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Contact {tenant.name}</h2>
+            <h2 className="text-[20px] md:text-[22px] font-bold text-[#11142d] dark:text-[#efefef]">Contact {tenant.name}</h2>
             <button
               onClick={() => setShowContactModal(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-[#f4f4f4] dark:hover:bg-[#111315] rounded-[8px] transition-colors"
             >
-              <X className="w-6 h-6 text-gray-600" />
+              <X className="w-5 h-5 md:w-6 md:h-6 text-[#808191] dark:text-[#92939e]" />
             </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Phone */}
             <a
               href={`tel:${tenant.phone}`}
-              className="flex items-center gap-4 p-4 bg-blue-50 rounded-xl hover:bg-blue-100 transition-all border border-blue-200 group"
+              className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] hover:bg-[#475be8]/10 dark:hover:bg-[#6c7ce8]/10 transition-colors group border border-transparent hover:border-[#475be8] dark:hover:border-[#6c7ce8]"
             >
-              <div className="p-3 bg-blue-600 rounded-lg group-hover:scale-110 transition-transform">
-                <Phone className="w-6 h-6 text-white" />
+              <div className="p-2.5 md:p-3 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px] group-hover:bg-[#475be8] dark:group-hover:bg-[#6c7ce8] transition-colors">
+                <Phone className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Call</p>
-                <p className="text-sm text-gray-600">{tenant.phone}</p>
+                <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">Call</p>
+                <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e]">{tenant.phone}</p>
               </div>
             </a>
 
             {/* Email */}
             <a
               href={`mailto:${tenant.email}`}
-              className="flex items-center gap-4 p-4 bg-purple-50 rounded-xl hover:bg-purple-100 transition-all border border-purple-200 group"
+              className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] hover:bg-[#475be8]/10 dark:hover:bg-[#6c7ce8]/10 transition-colors group border border-transparent hover:border-[#475be8] dark:hover:border-[#6c7ce8]"
             >
-              <div className="p-3 bg-purple-600 rounded-lg group-hover:scale-110 transition-transform">
-                <Mail className="w-6 h-6 text-white" />
+              <div className="p-2.5 md:p-3 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px] group-hover:bg-[#475be8] dark:group-hover:bg-[#6c7ce8] transition-colors">
+                <Mail className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Email</p>
-                <p className="text-sm text-gray-600">{tenant.email}</p>
+                <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">Email</p>
+                <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e]">{tenant.email}</p>
               </div>
             </a>
 
@@ -430,14 +471,14 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
               href={`https://wa.me/${formatPhoneForWhatsApp(tenant.phone)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-4 bg-green-50 rounded-xl hover:bg-green-100 transition-all border border-green-200 group"
+              className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#f4f4f4] dark:bg-[#111315] rounded-[10px] hover:bg-[#7fba7a]/10 transition-colors group border border-transparent hover:border-[#7fba7a]"
             >
-              <div className="p-3 bg-green-600 rounded-lg group-hover:scale-110 transition-transform">
-                <MessageSquare className="w-6 h-6 text-white" />
+              <div className="p-2.5 md:p-3 bg-[#7fba7a]/10 rounded-[8px] group-hover:bg-[#7fba7a] transition-colors">
+                <MessageSquare className="w-5 h-5 md:w-6 md:h-6 text-[#7fba7a] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">WhatsApp</p>
-                <p className="text-sm text-gray-600">Send message via WhatsApp</p>
+                <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">WhatsApp</p>
+                <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e]">Send message</p>
               </div>
             </a>
           </div>
@@ -447,13 +488,13 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
     {/* Send Lease Agreement Modal */}
     {showLeaseModal && (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6">
+      <div className="fixed inset-0 bg-black/40 dark:bg-black/60 flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[15px] md:rounded-[20px] shadow-xl max-w-lg w-full p-6 md:p-8 my-8 border border-[#e4e8ef] dark:border-[#272b30]">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Send Lease Document</h2>
-              <p className="text-sm text-gray-600 mt-1">
-                Sending to: <span className="font-semibold text-gray-900">{tenant.name}</span>
+              <h2 className="text-[20px] md:text-[22px] font-bold text-[#11142d] dark:text-[#efefef]">Send Lease Document</h2>
+              <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e] mt-1">
+                Sending to: <span className="font-semibold text-[#11142d] dark:text-[#efefef]">{tenant.name}</span>
               </p>
             </div>
             <button
@@ -462,33 +503,33 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
                 setIsFromRenewal(false);
                 setLeaseTemplate('Standard Residential Lease');
               }}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-[#f4f4f4] dark:hover:bg-[#111315] rounded-[8px] transition-colors"
             >
-              <X className="w-6 h-6 text-gray-600" />
+              <X className="w-5 h-5 md:w-6 md:h-6 text-[#808191] dark:text-[#92939e]" />
             </button>
           </div>
 
           <div className="mb-6">
-            <div className="flex items-center gap-3 p-4 bg-blue-50 rounded-xl border border-blue-200">
+            <div className="flex items-center gap-3 p-3 md:p-4 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[10px] border border-[#475be8]/20 dark:border-[#6c7ce8]/20">
               <img
                 src={tenant.photo}
                 alt={tenant.name}
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-[8px]"
               />
               <div>
-                <p className="font-semibold text-gray-900">{tenant.name}</p>
-                <p className="text-sm text-gray-600">{tenant.email}</p>
+                <p className="font-semibold text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef]">{tenant.name}</p>
+                <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e]">{tenant.email}</p>
               </div>
             </div>
           </div>
 
           {isFromRenewal && (
-            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+            <div className="mb-4 p-3 md:p-4 bg-[#7fba7a]/10 border border-[#7fba7a]/30 rounded-[10px]">
               <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-[#7fba7a] mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-green-900">Lease Renewed Successfully!</p>
-                  <p className="text-sm text-green-700 mt-1">
+                  <p className="font-semibold text-[13px] md:text-[14px] text-[#7fba7a]">Lease Renewed Successfully!</p>
+                  <p className="text-[12px] md:text-[13px] text-[#7fba7a]/90 mt-1">
                     The lease renewal has been created. Now send the updated lease agreement to your tenant.
                   </p>
                 </div>
@@ -498,15 +539,15 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
           {/* Info banner when NOT from renewal */}
           {!isFromRenewal && (
-            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+            <div className="mb-4 p-3 md:p-4 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 border border-[#475be8]/30 dark:border-[#6c7ce8]/30 rounded-[10px]">
               <div className="flex items-start gap-3">
-                <FileText className="w-5 h-5 text-blue-600 mt-0.5" />
+                <FileText className="w-4 h-4 md:w-5 md:h-5 text-[#475be8] dark:text-[#6c7ce8] mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-blue-900">Current Lease Information</p>
-                  <p className="text-sm text-blue-700 mt-1">
-                    Tenant: {tenant.name} • {tenant.property.unit} at {tenant.property.name}
+                  <p className="font-semibold text-[13px] md:text-[14px] text-[#475be8] dark:text-[#6c7ce8]">Current Lease Information</p>
+                  <p className="text-[12px] md:text-[13px] text-[#475be8]/90 dark:text-[#6c7ce8]/90 mt-1">
+                    {tenant.name} • {tenant.property.unit} at {tenant.property.name}
                   </p>
-                  <p className="text-xs text-blue-600 mt-1">
+                  <p className="text-[11px] md:text-[12px] text-[#475be8]/80 dark:text-[#6c7ce8]/80 mt-1">
                     Lease Period: {tenant.lease.startDate} - {tenant.lease.endDate}
                   </p>
                 </div>
@@ -517,42 +558,42 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
           <div className="space-y-4 mb-6">
             {/* Document Name Preview */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[13px] md:text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Document Name
               </label>
-              <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
-                <p className="text-sm font-mono text-gray-900">
+              <div className="w-full px-3 md:px-4 py-2.5 md:py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px]">
+                <p className="text-[12px] md:text-[13px] font-mono text-[#11142d] dark:text-[#efefef]">
                   {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}
                 </p>
               </div>
-              <p className="text-xs text-gray-500 mt-2">
-                Format: name_lease_MM_YY_MM_YY.pdf (start and end dates)
+              <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e] mt-2">
+                Format: name_lease_MM_YY_MM_YY.pdf
               </p>
             </div>
 
             {/* Document Type - Read-only display */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[13px] md:text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Document Type
               </label>
-              <div className={`w-full px-4 py-3 rounded-xl flex items-center justify-between ${
+              <div className={`w-full px-3 md:px-4 py-2.5 md:py-3 rounded-[10px] flex items-center justify-between ${
                 isFromRenewal 
-                  ? 'bg-blue-50 border-2 border-blue-300' 
-                  : 'bg-gray-50 border border-gray-200'
+                  ? 'bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 border-2 border-[#475be8] dark:border-[#6c7ce8]' 
+                  : 'bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30]'
               }`}>
-                <span className={`font-semibold ${
-                  isFromRenewal ? 'text-blue-900' : 'text-gray-900'
+                <span className={`font-semibold text-[13px] md:text-[14px] ${
+                  isFromRenewal ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#11142d] dark:text-[#efefef]'
                 }`}>
                   {isFromRenewal ? 'Lease Renewal' : 'Current Lease Agreement'}
                 </span>
                 {isFromRenewal && (
-                  <span className="px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded">
+                  <span className="px-2 py-0.5 bg-[#475be8] dark:bg-[#6c7ce8] text-white text-[11px] font-semibold rounded-[6px]">
                     Auto-selected
                   </span>
                 )}
               </div>
-              <p className={`text-xs mt-2 ${
-                isFromRenewal ? 'text-blue-600' : 'text-gray-500'
+              <p className={`text-[11px] md:text-[12px] mt-2 ${
+                isFromRenewal ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
               }`}>
                 {isFromRenewal 
                   ? 'Sending new lease renewal agreement' 
@@ -562,24 +603,24 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
             {/* Delivery Method */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-3">
+              <label className="block text-[13px] md:text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-3">
                 How would you like to send?
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 gap-2 md:gap-3">
                 <button
                   type="button"
                   onClick={() => setDeliveryMethod('email')}
-                  className={`p-4 border-2 rounded-xl transition-all ${
+                  className={`p-3 md:p-4 border-2 rounded-[10px] transition-all ${
                     deliveryMethod === 'email'
-                      ? 'border-blue-600 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300'
+                      ? 'border-[#475be8] dark:border-[#6c7ce8] bg-[#475be8]/10 dark:bg-[#6c7ce8]/10'
+                      : 'border-[#e4e8ef] dark:border-[#272b30] hover:border-[#475be8] dark:hover:border-[#6c7ce8]'
                   }`}
                 >
-                  <Mail className={`w-6 h-6 mx-auto mb-2 ${
-                    deliveryMethod === 'email' ? 'text-blue-600' : 'text-gray-400'
+                  <Mail className={`w-5 h-5 md:w-6 md:h-6 mx-auto mb-2 ${
+                    deliveryMethod === 'email' ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
                   }`} />
-                  <p className={`text-sm font-semibold ${
-                    deliveryMethod === 'email' ? 'text-blue-600' : 'text-gray-600'
+                  <p className={`text-[12px] md:text-[13px] font-semibold ${
+                    deliveryMethod === 'email' ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
                   }`}>
                     Email
                   </p>
@@ -588,17 +629,17 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
                 <button
                   type="button"
                   onClick={() => setDeliveryMethod('whatsapp')}
-                  className={`p-4 border-2 rounded-xl transition-all ${
+                  className={`p-3 md:p-4 border-2 rounded-[10px] transition-all ${
                     deliveryMethod === 'whatsapp'
-                      ? 'border-green-600 bg-green-50'
-                      : 'border-gray-200 hover:border-green-300'
+                      ? 'border-[#7fba7a] bg-[#7fba7a]/10'
+                      : 'border-[#e4e8ef] dark:border-[#272b30] hover:border-[#7fba7a]'
                   }`}
                 >
-                  <MessageSquare className={`w-6 h-6 mx-auto mb-2 ${
-                    deliveryMethod === 'whatsapp' ? 'text-green-600' : 'text-gray-400'
+                  <MessageSquare className={`w-5 h-5 md:w-6 md:h-6 mx-auto mb-2 ${
+                    deliveryMethod === 'whatsapp' ? 'text-[#7fba7a]' : 'text-[#808191] dark:text-[#92939e]'
                   }`} />
-                  <p className={`text-sm font-semibold ${
-                    deliveryMethod === 'whatsapp' ? 'text-green-600' : 'text-gray-600'
+                  <p className={`text-[12px] md:text-[13px] font-semibold ${
+                    deliveryMethod === 'whatsapp' ? 'text-[#7fba7a]' : 'text-[#808191] dark:text-[#92939e]'
                   }`}>
                     WhatsApp
                   </p>
@@ -607,22 +648,22 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
                 <button
                   type="button"
                   onClick={() => setDeliveryMethod('both')}
-                  className={`p-4 border-2 rounded-xl transition-all ${
+                  className={`p-3 md:p-4 border-2 rounded-[10px] transition-all ${
                     deliveryMethod === 'both'
-                      ? 'border-purple-600 bg-purple-50'
-                      : 'border-gray-200 hover:border-purple-300'
+                      ? 'border-[#475be8] dark:border-[#6c7ce8] bg-[#475be8]/10 dark:bg-[#6c7ce8]/10'
+                      : 'border-[#e4e8ef] dark:border-[#272b30] hover:border-[#475be8] dark:hover:border-[#6c7ce8]'
                   }`}
                 >
                   <div className="flex justify-center gap-1 mb-2">
-                    <Mail className={`w-5 h-5 ${
-                      deliveryMethod === 'both' ? 'text-purple-600' : 'text-gray-400'
+                    <Mail className={`w-4 h-4 md:w-5 md:h-5 ${
+                      deliveryMethod === 'both' ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
                     }`} />
-                    <MessageSquare className={`w-5 h-5 ${
-                      deliveryMethod === 'both' ? 'text-purple-600' : 'text-gray-400'
+                    <MessageSquare className={`w-4 h-4 md:w-5 md:h-5 ${
+                      deliveryMethod === 'both' ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
                     }`} />
                   </div>
-                  <p className={`text-sm font-semibold ${
-                    deliveryMethod === 'both' ? 'text-purple-600' : 'text-gray-600'
+                  <p className={`text-[12px] md:text-[13px] font-semibold ${
+                    deliveryMethod === 'both' ? 'text-[#475be8] dark:text-[#6c7ce8]' : 'text-[#808191] dark:text-[#92939e]'
                   }`}>
                     Both
                   </p>
@@ -631,43 +672,42 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[13px] md:text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Message (Optional)
               </label>
               <textarea
                 rows={4}
                 placeholder="Add a personal message..."
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-3 md:px-4 py-2.5 md:py-3 border border-[#e4e8ef] dark:border-[#272b30] bg-[#fcfcfc] dark:bg-[#1a1d1f] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] focus:border-transparent resize-none text-[13px] md:text-[14px]"
                 defaultValue={
                   isFromRenewal
-                    ? `Hi ${tenant.name.split(' ')[0]},\n\nGreat news! Your lease renewal for ${tenant.property.unit} at ${tenant.property.name} has been processed.\n\nPlease find attached your new lease agreement with the updated terms. The document is ready for your review and signature.\n\nDocument: ${formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}\n\nPlease review and let me know if you have any questions.\n\nBest regards`
-                    : `Hi ${tenant.name.split(' ')[0]},\n\nPlease find attached your personalized lease agreement for ${tenant.property.unit} at ${tenant.property.name}. All tenant and property details have been filled in for your convenience.\n\nPlease review and let me know if you have any questions.\n\nBest regards`
+                    ? `Hi ${tenant.name.split(' ')[0]},\n\nGreat news! Your lease renewal for ${tenant.property.unit} at ${tenant.property.name} has been processed.\n\nPlease find attached your new lease agreement.\n\nBest regards`
+                    : `Hi ${tenant.name.split(' ')[0]},\n\nPlease find attached your lease agreement for ${tenant.property.unit} at ${tenant.property.name}.\n\nBest regards`
                 }
               />
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3">
             <button
               onClick={() => {
                 setShowLeaseModal(false);
                 setIsFromRenewal(false);
                 setLeaseTemplate('Standard Residential Lease');
               }}
-              className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+              className="px-4 md:px-6 py-2.5 md:py-3 border border-[#e4e8ef] dark:border-[#272b30] text-[#11142d] dark:text-[#efefef] rounded-[10px] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] transition-colors font-medium text-[13px] md:text-[14px]"
             >
               Cancel
             </button>
             <button
               onClick={() => setShowPreviewModal(true)}
-              className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-medium flex items-center gap-2"
+              className="px-4 md:px-6 py-2.5 md:py-3 border-2 border-[#475be8] dark:border-[#6c7ce8] text-[#475be8] dark:text-[#6c7ce8] rounded-[10px] hover:bg-[#475be8]/10 dark:hover:bg-[#6c7ce8]/10 transition-colors font-medium flex items-center gap-2 text-[13px] md:text-[14px]"
             >
-              <Eye className="w-5 h-5" />
+              <Eye className="w-4 h-4 md:w-5 md:h-5" />
               Preview
             </button>
             <button
               onClick={() => {
-                // In a real app, this would send the email
                 const documentName = formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate);
                 const deliveryText = deliveryMethod === 'both' ? 'email and WhatsApp' : deliveryMethod;
                 const message = isFromRenewal 
@@ -678,9 +718,9 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
                 setIsFromRenewal(false);
                 setLeaseTemplate('Standard Residential Lease');
               }}
-              className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2"
+              className="flex-1 px-4 md:px-6 py-2.5 md:py-3 bg-[#475be8] dark:bg-[#6c7ce8] text-white rounded-[10px] hover:bg-[#3d4fc7] dark:hover:bg-[#5d6dd7] transition-colors font-medium flex items-center justify-center gap-2 text-[13px] md:text-[14px]"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4 md:w-5 md:h-5" />
               Send Agreement
             </button>
           </div>
@@ -720,15 +760,15 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
     {/* Lease Preview Modal */}
     {showPreviewModal && (
-      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-[60] p-4">
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[15px] md:rounded-[20px] shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col border border-[#e4e8ef] dark:border-[#272b30]">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between text-white">
+          <div className="bg-gradient-to-r from-[#475be8] to-[#3d4fc7] dark:from-[#6c7ce8] dark:to-[#5d6dd7] px-4 md:px-6 py-4 flex items-center justify-between text-white">
             <div className="flex items-center gap-3">
-              <FileText className="w-6 h-6" />
+              <FileText className="w-5 h-5 md:w-6 md:h-6" />
               <div>
-                <h2 className="text-xl font-bold">Lease Agreement Preview</h2>
-                <p className="text-sm text-blue-100">
+                <h2 className="text-[18px] md:text-[20px] font-bold">Lease Agreement Preview</h2>
+                <p className="text-[12px] md:text-[13px] text-white/90">
                   {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}
                 </p>
               </div>
@@ -736,37 +776,37 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
             <div className="flex gap-2">
               <button
                 onClick={() => alert('Download functionality would be implemented here')}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/20 rounded-[8px] transition-colors"
                 title="Download PDF"
               >
-                <Download className="w-5 h-5" />
+                <Download className="w-4 h-4 md:w-5 md:h-5" />
               </button>
               <button
                 onClick={() => setShowPreviewModal(false)}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                className="p-2 hover:bg-white/20 rounded-[8px] transition-colors"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </div>
           </div>
 
           {/* Document Preview */}
-          <div className="flex-1 overflow-y-auto bg-gray-100 p-6">
-            <div className="bg-white rounded-lg shadow-lg max-w-3xl mx-auto p-12 font-serif">
+          <div className="flex-1 overflow-y-auto bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6">
+            <div className="bg-white dark:bg-[#1a1d1f] rounded-[10px] shadow-lg max-w-3xl mx-auto p-8 md:p-12 font-serif">
               {/* Document Header */}
-              <div className="text-center mb-8 border-b-2 border-gray-800 pb-6">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <div className="text-center mb-8 border-b-2 border-[#11142d] dark:border-[#efefef] pb-6">
+                <h1 className="text-2xl md:text-3xl font-bold text-[#11142d] dark:text-[#efefef] mb-2">
                   {isFromRenewal ? 'LEASE RENEWAL AGREEMENT' : leaseTemplate.toUpperCase()}
                 </h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e]">
                   Document ID: {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate).replace('.pdf', '')}
                 </p>
               </div>
 
               {/* Parties */}
               <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">PARTIES TO THIS AGREEMENT</h2>
-                <div className="space-y-3 text-gray-700">
+                <h2 className="text-[18px] md:text-[20px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">PARTIES TO THIS AGREEMENT</h2>
+                <div className="space-y-3 text-[#11142d] dark:text-[#efefef] text-[13px] md:text-[14px]">
                   <p><strong>Landlord/Property Manager:</strong> Property Management Company</p>
                   <p><strong>Tenant:</strong> {tenant.name}</p>
                   <p><strong>Email:</strong> {tenant.email}</p>
@@ -776,8 +816,8 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
               {/* Property Details */}
               <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">PROPERTY DETAILS</h2>
-                <div className="space-y-3 text-gray-700">
+                <h2 className="text-[18px] md:text-[20px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">PROPERTY DETAILS</h2>
+                <div className="space-y-3 text-[#11142d] dark:text-[#efefef] text-[13px] md:text-[14px]">
                   <p><strong>Property Address:</strong> {tenant.property.address}</p>
                   <p><strong>Property Name:</strong> {tenant.property.name}</p>
                   <p><strong>Unit:</strong> {tenant.property.unit}</p>
@@ -786,71 +826,70 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
 
               {/* Lease Terms */}
               <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">LEASE TERMS</h2>
-                <div className="space-y-3 text-gray-700">
+                <h2 className="text-[18px] md:text-[20px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">LEASE TERMS</h2>
+                <div className="space-y-3 text-[#11142d] dark:text-[#efefef] text-[13px] md:text-[14px]">
                   <p><strong>Lease Start Date:</strong> {tenant.lease.startDate}</p>
                   <p><strong>Lease End Date:</strong> {tenant.lease.endDate}</p>
                   <p><strong>Monthly Rent:</strong> ${tenant.lease.monthlyRent.toLocaleString()}</p>
                   <p><strong>Security Deposit:</strong> ${tenant.lease.securityDeposit.toLocaleString()}</p>
-                  <p><strong>Lease Status:</strong> <span className="text-green-600 font-semibold">{tenant.lease.status}</span></p>
+                  <p><strong>Lease Status:</strong> <span className="text-[#7fba7a] font-semibold">{tenant.lease.status}</span></p>
                 </div>
               </div>
 
               {/* Terms and Conditions */}
               <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">TERMS AND CONDITIONS</h2>
-                <div className="space-y-4 text-gray-700 text-sm leading-relaxed">
-                  <p><strong>1. RENT PAYMENT:</strong> Tenant agrees to pay rent on or before the 1st day of each month. Late payments may incur additional fees as specified in the lease agreement.</p>
+                <h2 className="text-[18px] md:text-[20px] font-bold text-[#11142d] dark:text-[#efefef] mb-4">TERMS AND CONDITIONS</h2>
+                <div className="space-y-4 text-[#11142d] dark:text-[#efefef] text-[12px] md:text-[13px] leading-relaxed">
+                  <p><strong>1. RENT PAYMENT:</strong> Tenant agrees to pay rent on or before the 1st day of each month. Late payments may incur additional fees.</p>
                   
-                  <p><strong>2. SECURITY DEPOSIT:</strong> The security deposit will be held for the duration of the lease and returned within 30 days of lease termination, minus any deductions for damages beyond normal wear and tear.</p>
+                  <p><strong>2. SECURITY DEPOSIT:</strong> The security deposit will be held for the duration of the lease and returned within 30 days of lease termination.</p>
                   
                   <p><strong>3. MAINTENANCE:</strong> Tenant is responsible for maintaining the property in good condition and reporting any maintenance issues promptly.</p>
                   
                   <p><strong>4. UTILITIES:</strong> Tenant is responsible for all utilities unless otherwise specified in writing.</p>
                   
-                  <p><strong>5. TERMINATION:</strong> Either party may terminate this lease with 60 days written notice, subject to the terms outlined in the full lease agreement.</p>
+                  <p><strong>5. TERMINATION:</strong> Either party may terminate this lease with 60 days written notice.</p>
                 </div>
               </div>
 
               {/* Signatures */}
-              <div className="mt-12 pt-8 border-t-2 border-gray-300">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">SIGNATURES</h2>
-                <div className="grid grid-cols-2 gap-8">
+              <div className="mt-12 pt-8 border-t-2 border-[#e4e8ef] dark:border-[#272b30]">
+                <h2 className="text-[18px] md:text-[20px] font-bold text-[#11142d] dark:text-[#efefef] mb-6">SIGNATURES</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <div className="border-b-2 border-gray-400 mb-2 pb-8"></div>
-                    <p className="text-sm text-gray-700 font-semibold">Landlord/Property Manager</p>
-                    <p className="text-xs text-gray-500">Date: _______________</p>
+                    <div className="border-b-2 border-[#808191] dark:border-[#92939e] mb-2 pb-8"></div>
+                    <p className="text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef] font-semibold">Landlord/Property Manager</p>
+                    <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">Date: _______________</p>
                   </div>
                   <div>
-                    <div className="border-b-2 border-gray-400 mb-2 pb-8"></div>
-                    <p className="text-sm text-gray-700 font-semibold">Tenant: {tenant.name}</p>
-                    <p className="text-xs text-gray-500">Date: _______________</p>
+                    <div className="border-b-2 border-[#808191] dark:border-[#92939e] mb-2 pb-8"></div>
+                    <p className="text-[13px] md:text-[14px] text-[#11142d] dark:text-[#efefef] font-semibold">Tenant: {tenant.name}</p>
+                    <p className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e]">Date: _______________</p>
                   </div>
                 </div>
               </div>
 
               {/* Footer */}
-              <div className="mt-8 text-center text-xs text-gray-500 border-t pt-4">
-                <p>This is a preview of the lease agreement. The actual document will be generated with complete legal terms and conditions.</p>
+              <div className="mt-8 text-center text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e] border-t border-[#e4e8ef] dark:border-[#272b30] pt-4">
+                <p>This is a preview of the lease agreement. The actual document will be generated with complete legal terms.</p>
                 <p className="mt-1">Generated on {new Date().toLocaleDateString()}</p>
               </div>
             </div>
           </div>
 
           {/* Footer Actions */}
-          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+          <div className="bg-[#f4f4f4] dark:bg-[#111315] px-4 md:px-6 py-4 border-t border-[#e4e8ef] dark:border-[#272b30] flex justify-end gap-2 md:gap-3">
             <button
               onClick={() => setShowPreviewModal(false)}
-              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium"
+              className="px-4 md:px-6 py-2 md:py-2.5 border border-[#e4e8ef] dark:border-[#272b30] text-[#11142d] dark:text-[#efefef] rounded-[8px] hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] transition-colors font-medium text-[13px] md:text-[14px]"
             >
               Close Preview
             </button>
             <button
               onClick={() => {
                 setShowPreviewModal(false);
-                // Send modal is still open in background
               }}
-              className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+              className="px-4 md:px-6 py-2 md:py-2.5 bg-[#475be8] dark:bg-[#6c7ce8] text-white rounded-[8px] hover:bg-[#3d4fc7] dark:hover:bg-[#5d6dd7] transition-colors font-medium flex items-center gap-2 text-[13px] md:text-[14px]"
             >
               <Send className="w-4 h-4" />
               Proceed to Send

@@ -71,10 +71,10 @@ const iconComponents = {
 };
 
 const iconColors = {
-  alert: 'bg-yellow-100 text-yellow-600',
-  calendar: 'bg-yellow-100 text-yellow-600',
-  success: 'bg-green-100 text-green-600',
-  megaphone: 'bg-blue-100 text-blue-600',
+  alert: 'bg-[#ffce73]/10 text-[#ffce73]',
+  calendar: 'bg-[#ffce73]/10 text-[#ffce73]',
+  success: 'bg-[#7fba7a]/10 text-[#7fba7a]',
+  megaphone: 'bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 text-[#475be8] dark:text-[#6c7ce8]',
 };
 
 export default function Notifications() {
@@ -85,95 +85,97 @@ export default function Notifications() {
     : notifications.filter(n => n.category === selectedCategory);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Notifications</h1>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {notificationCategories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`
-              px-4 py-2 rounded-lg font-medium transition-all
-              ${selectedCategory === category
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-              }
-            `}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4">
-        <div className="flex items-center gap-3">
-          <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-            <Check className="w-5 h-5 text-gray-600" />
-          </button>
-          <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-            <Trash2 className="w-5 h-5 text-gray-600" />
-          </button>
-          <div className="flex-1"></div>
-          <button className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">
-            Clear all
-          </button>
+    <div className="min-h-screen bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6">
+      <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6">
+        <div>
+          <h1 className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] mb-1">Notifications</h1>
         </div>
-      </div>
 
-      <div className="space-y-3">
-        {filteredNotifications.map((notification) => {
-          const IconComponent = iconComponents[notification.icon];
-
-          return (
-            <div
-              key={notification.id}
+        <div className="flex flex-wrap gap-2">
+          {notificationCategories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
               className={`
-                bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300
-                ${notification.priority === 'high' ? 'bg-red-50 border-red-200' : ''}
+                px-4 py-2 rounded-[8px] md:rounded-[10px] font-medium transition-all text-[13px] md:text-[14px]
+                ${selectedCategory === category
+                  ? 'bg-[#475be8] dark:bg-[#6c7ce8] text-white'
+                  : 'bg-[#fcfcfc] dark:bg-[#1a1d1f] text-[#808191] dark:text-[#92939e] hover:text-[#11142d] dark:hover:text-[#efefef] border border-[#e4e8ef] dark:border-[#272b30]'
+                }
               `}
             >
-              <div className="flex gap-4">
-                <div className={`p-3 rounded-xl ${iconColors[notification.icon]} flex-shrink-0 h-fit`}>
-                  <IconComponent className="w-6 h-6" />
-                </div>
+              {category}
+            </button>
+          ))}
+        </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <h3 className="text-lg font-bold text-gray-900">{notification.title}</h3>
-                    <span className="text-sm text-gray-500 whitespace-nowrap">{notification.time}</span>
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] p-4">
+          <div className="flex items-center gap-3">
+            <button className="p-2 hover:bg-[#f4f4f4] dark:hover:bg-[#111315] rounded-[8px] transition-colors">
+              <Check className="w-4 h-4 md:w-5 md:h-5 text-[#808191] dark:text-[#92939e]" />
+            </button>
+            <button className="p-2 hover:bg-[#f4f4f4] dark:hover:bg-[#111315] rounded-[8px] transition-colors">
+              <Trash2 className="w-4 h-4 md:w-5 md:h-5 text-[#808191] dark:text-[#92939e]" />
+            </button>
+            <div className="flex-1"></div>
+            <button className="px-4 py-2 text-[#808191] dark:text-[#92939e] hover:bg-[#f4f4f4] dark:hover:bg-[#111315] rounded-[8px] font-medium transition-colors text-[13px] md:text-[14px]">
+              Clear all
+            </button>
+          </div>
+        </div>
+
+        <div className="space-y-3 md:space-y-4">
+          {filteredNotifications.map((notification) => {
+            const IconComponent = iconComponents[notification.icon];
+
+            return (
+              <div
+                key={notification.id}
+                className={`
+                  bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] p-4 md:p-6 hover:shadow-lg transition-all duration-300
+                  ${notification.priority === 'high' ? 'bg-[#f45252]/5 border-[#f45252]/30' : ''}
+                `}
+              >
+                <div className="flex gap-3 md:gap-4">
+                  <div className={`p-2.5 md:p-3 rounded-[8px] md:rounded-[10px] ${iconColors[notification.icon]} flex-shrink-0 h-fit`}>
+                    <IconComponent className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
-                  <p className="text-gray-600 mb-4">{notification.message}</p>
 
-                  {notification.action && (
-                    <button
-                      className={`
-                        px-4 py-2 rounded-lg font-medium transition-all
-                        ${notification.action.variant === 'primary'
-                          ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-600/30'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }
-                      `}
-                    >
-                      {notification.action.label}
-                    </button>
-                  )}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <h3 className="text-[14px] md:text-[16px] font-bold text-[#11142d] dark:text-[#efefef]">{notification.title}</h3>
+                      <span className="text-[11px] md:text-[12px] text-[#808191] dark:text-[#92939e] whitespace-nowrap">{notification.time}</span>
+                    </div>
+                    <p className="text-[12px] md:text-[13px] text-[#808191] dark:text-[#92939e] mb-4">{notification.message}</p>
+
+                    {notification.action && (
+                      <button
+                        className={`
+                          px-4 py-2 rounded-[8px] md:rounded-[10px] font-medium transition-all text-[12px] md:text-[13px]
+                          ${notification.action.variant === 'primary'
+                            ? 'bg-[#475be8] dark:bg-[#6c7ce8] text-white hover:opacity-90'
+                            : 'bg-[#f4f4f4] dark:bg-[#111315] text-[#11142d] dark:text-[#efefef] hover:bg-[#e4e8ef] dark:hover:bg-[#272b30]'
+                          }
+                        `}
+                      >
+                        {notification.action.label}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {filteredNotifications.length === 0 && (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center">
-          <Bell className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-gray-900 mb-2">No notifications</h3>
-          <p className="text-gray-600">You're all caught up! Check back later for updates.</p>
+            );
+          })}
         </div>
-      )}
+
+        {filteredNotifications.length === 0 && (
+          <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] border border-[#e4e8ef] dark:border-[#272b30] p-8 md:p-12 text-center">
+            <Bell className="w-12 h-12 md:w-16 md:h-16 text-[#e4e8ef] dark:text-[#272b30] mx-auto mb-4" />
+            <h3 className="text-[16px] md:text-[18px] font-bold text-[#11142d] dark:text-[#efefef] mb-2">No notifications</h3>
+            <p className="text-[13px] md:text-[14px] text-[#808191] dark:text-[#92939e]">You're all caught up! Check back later for updates.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

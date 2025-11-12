@@ -67,33 +67,30 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="h-full bg-[#f4f4f4] dark:bg-[#111315] p-4 md:p-6 overflow-y-auto transition-colors">
+      <div className="flex items-center gap-4 mb-4 md:mb-6">
         <button
           onClick={onBack}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] rounded-[8px] transition-colors"
         >
-          <ArrowLeft className="w-6 h-6 text-gray-600" />
+          <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-[#808191] dark:text-[#92939e]" />
         </button>
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Add New Tenant</h1>
-          <p className="text-gray-600">Invite a tenant and assign them to a property</p>
-        </div>
+        <h1 className="text-[22px] md:text-[25px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Add New Tenant</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
         {/* Personal Information */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <User className="w-6 h-6 text-blue-600" />
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="p-2 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px]">
+              <User className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Personal Information</h2>
+            <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Personal Information</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 First Name *
               </label>
               <input
@@ -102,13 +99,13 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
                 placeholder="Enter first name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Last Name *
               </label>
               <input
@@ -117,42 +114,42 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
                 placeholder="Enter last name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Email Address *
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808191] dark:text-[#92939e]" />
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
                   placeholder="tenant@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Phone Number *
               </label>
               <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808191] dark:text-[#92939e]" />
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -161,31 +158,30 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
         </div>
 
         {/* Property Assignment */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-green-50 rounded-lg">
-              <Home className="w-6 h-6 text-green-600" />
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="p-2 bg-[#7fba7a]/10 rounded-[8px]">
+              <Home className="w-5 h-5 md:w-6 md:h-6 text-[#7fba7a]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Property Assignment</h2>
+            <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Property Assignment</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Property *
               </label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808191] dark:text-[#92939e] pointer-events-none z-10" />
                 <select
                   name="property"
                   value={formData.property}
                   onChange={(e) => {
                     handleChange(e);
-                    // Reset unit when property changes
                     setFormData(prev => ({ ...prev, unit: '', unitType: '', rent: '' }));
                   }}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
+                  className="w-full pl-10 pr-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] appearance-none text-[14px] text-[#11142d] dark:text-[#efefef] transition-colors"
                 >
                   <option value="">Select a property</option>
                   {properties.map(property => (
@@ -198,7 +194,7 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Unit/Apartment *
               </label>
               <select
@@ -217,7 +213,7 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 }}
                 required
                 disabled={!formData.property}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                className="w-full px-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] appearance-none text-[14px] text-[#11142d] dark:text-[#efefef] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <option value="">
                   {formData.property ? 'Select a unit' : 'Select property first'}
@@ -229,7 +225,7 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 ))}
               </select>
               {selectedUnit && (
-                <p className="mt-2 text-sm text-green-600 font-medium">
+                <p className="mt-2 text-[13px] text-[#7fba7a] font-medium">
                   ✓ {selectedUnit.type} • ${selectedUnit.rent}/month
                 </p>
               )}
@@ -238,17 +234,17 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
         </div>
 
         {/* Lease Details */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-purple-50 rounded-lg">
-              <Calendar className="w-6 h-6 text-purple-600" />
+        <div className="bg-[#fcfcfc] dark:bg-[#1a1d1f] rounded-[10px] md:rounded-[15px] p-4 md:p-6 transition-colors border border-[#e4e8ef] dark:border-[#272b30]">
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="p-2 bg-[#475be8]/10 dark:bg-[#6c7ce8]/10 rounded-[8px]">
+              <Calendar className="w-5 h-5 md:w-6 md:h-6 text-[#475be8] dark:text-[#6c7ce8]" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Lease Details</h2>
+            <h2 className="text-[18px] font-bold text-[#11142d] dark:text-[#efefef] transition-colors">Lease Details</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Lease Start Date *
               </label>
               <input
@@ -257,12 +253,12 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 value={formData.leaseStart}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Lease End Date *
               </label>
               <input
@@ -271,16 +267,16 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                 value={formData.leaseEnd}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Monthly Rent *
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#808191] dark:text-[#92939e] font-semibold text-[14px]">
                   $
                 </span>
                 <input
@@ -290,23 +286,18 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                   onChange={handleChange}
                   required
                   readOnly={!!selectedUnit}
-                  className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 read-only:bg-gray-50"
+                  className="w-full pl-8 pr-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] read-only:opacity-70 transition-colors"
                   placeholder="Auto-filled from unit"
                 />
               </div>
-              {selectedUnit && (
-                <p className="mt-1 text-xs text-gray-500">
-                  Rent amount is set by the selected unit
-                </p>
-              )}
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                 Security Deposit *
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#808191] dark:text-[#92939e] font-semibold text-[14px]">
                   $
                 </span>
                 <input
@@ -315,7 +306,7 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
                   value={formData.deposit}
                   onChange={handleChange}
                   required
-                  className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-8 pr-4 py-3 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef] placeholder:text-[#808191] dark:placeholder:text-[#92939e] transition-colors"
                   placeholder="3000"
                 />
               </div>
@@ -324,59 +315,55 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
         </div>
 
         {/* Invitation Option */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border border-blue-200 p-6">
+        <div className="bg-[#475be8]/5 dark:bg-[#6c7ce8]/10 rounded-[10px] md:rounded-[15px] border border-[#475be8]/20 dark:border-[#6c7ce8]/20 p-4 md:p-6 transition-colors">
           <div className="space-y-4">
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3 md:gap-4">
               <input
                 type="checkbox"
                 id="sendInvitation"
                 checked={formData.sendInvitation}
                 onChange={(e) => setFormData((prev) => ({ ...prev, sendInvitation: e.target.checked }))}
-                className="w-5 h-5 mt-1 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 md:w-5 md:h-5 mt-1 text-[#475be8] dark:text-[#6c7ce8] border-[#e4e8ef] dark:border-[#272b30] rounded focus:ring-[#475be8] dark:focus:ring-[#6c7ce8]"
               />
               <div className="flex-1">
                 <label htmlFor="sendInvitation" className="flex items-center gap-2 cursor-pointer">
-                  <Send className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-gray-900">Send Invitation Email</span>
+                  <Send className="w-5 h-5 text-[#475be8] dark:text-[#6c7ce8]" />
+                  <span className="font-semibold text-[14px] text-[#11142d] dark:text-[#efefef]">Send Invitation Email</span>
                 </label>
-                <p className="text-sm text-gray-600 mt-1">
-                  The tenant will receive an email with login credentials and instructions to access their portal.
-                  They can view their lease, make payments, and submit maintenance requests.
+                <p className="text-[13px] text-[#808191] dark:text-[#92939e] mt-1">
+                  Tenant will receive an email with login credentials to access their portal.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 pt-4 border-t border-blue-200">
+            <div className="flex items-start gap-3 md:gap-4 pt-4 border-t border-[#475be8]/10 dark:border-[#6c7ce8]/20">
               <input
                 type="checkbox"
                 id="sendLeaseAgreement"
                 checked={formData.sendLeaseAgreement}
                 onChange={(e) => setFormData((prev) => ({ ...prev, sendLeaseAgreement: e.target.checked }))}
-                className="w-5 h-5 mt-1 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                className="w-4 h-4 md:w-5 md:h-5 mt-1 text-[#475be8] dark:text-[#6c7ce8] border-[#e4e8ef] dark:border-[#272b30] rounded focus:ring-[#475be8] dark:focus:ring-[#6c7ce8]"
               />
               <div className="flex-1">
                 <label htmlFor="sendLeaseAgreement" className="flex items-center gap-2 cursor-pointer">
-                  <FileText className="w-5 h-5 text-purple-600" />
-                  <span className="font-semibold text-gray-900">Send Lease Agreement</span>
+                  <FileText className="w-5 h-5 text-[#475be8] dark:text-[#6c7ce8]" />
+                  <span className="font-semibold text-[14px] text-[#11142d] dark:text-[#efefef]">Send Lease Agreement</span>
                 </label>
-                <p className="text-sm text-gray-600 mt-1">
-                  Automatically send a personalized lease agreement to the tenant's email. The template will be auto-filled with tenant and property details.
+                <p className="text-[13px] text-[#808191] dark:text-[#92939e] mt-1">
+                  Auto-send personalized lease agreement to tenant's email.
                 </p>
                 
                 {formData.sendLeaseAgreement && (
                   <div className="mt-3">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-[14px] font-semibold text-[#11142d] dark:text-[#efefef] mb-2">
                       Select Lease Template
                     </label>
-                    <select className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white">
+                    <select className="w-full px-4 py-2.5 bg-[#f4f4f4] dark:bg-[#111315] border border-[#e4e8ef] dark:border-[#272b30] rounded-[10px] focus:outline-none focus:ring-2 focus:ring-[#475be8] dark:focus:ring-[#6c7ce8] text-[14px] text-[#11142d] dark:text-[#efefef]">
                       <option>Standard Residential Lease</option>
                       <option>Month-to-Month Agreement</option>
                       <option>Commercial Lease</option>
                       <option>Student Housing Lease</option>
                     </select>
-                    <p className="text-xs text-gray-500 mt-1.5">
-                      Template will be customized with tenant details automatically
-                    </p>
                   </div>
                 )}
               </div>
@@ -389,13 +376,13 @@ export default function AddTenant({ onBack, onSave }: AddTenantProps) {
           <button
             type="button"
             onClick={onBack}
-            className="px-6 py-3 border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-all duration-200"
+            className="px-4 md:px-6 py-2.5 md:py-3 border border-[#e4e8ef] dark:border-[#272b30] text-[#11142d] dark:text-[#efefef] font-semibold rounded-[10px] hover:bg-[#fcfcfc] dark:hover:bg-[#1a1d1f] transition-all duration-200 text-[14px]"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all duration-200 shadow-lg shadow-blue-600/30 hover:shadow-xl transform hover:-translate-y-0.5"
+            className="px-4 md:px-6 py-2.5 md:py-3 bg-[#475be8] dark:bg-[#6c7ce8] text-white font-semibold rounded-[10px] hover:bg-[#3d4ec7] dark:hover:bg-[#5a6dd6] transition-all duration-200 text-[14px]"
           >
             Add Tenant & Send Invitation
           </button>
