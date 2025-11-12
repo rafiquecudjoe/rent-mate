@@ -1,5 +1,6 @@
 import { Search, Filter, Download, Calendar, DollarSign, CheckCircle, Clock, XCircle, TrendingUp, Plus, X, FileText, FileSpreadsheet } from 'lucide-react';
 import { useState } from 'react';
+import RecordPaymentModal, { PaymentData } from '../components/RecordPaymentModal';
 
 const stats = [
   { label: 'Total Collected', value: '$45,600', change: '+12%', icon: DollarSign, color: 'green' },
@@ -65,15 +66,6 @@ export default function Payments({ onViewHistory }: PaymentsProps) {
   const [showExportModal, setShowExportModal] = useState(false);
   const [showDateRangeMenu, setShowDateRangeMenu] = useState(false);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
-  const [paymentForm, setPaymentForm] = useState({
-    tenant: '',
-    property: '',
-    amount: '',
-    paymentDate: new Date().toISOString().split('T')[0],
-    paymentMethod: 'Bank Transfer',
-    referenceNumber: '',
-    notes: '',
-  });
 
   const [exportForm, setExportForm] = useState({
     dateFrom: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
@@ -92,34 +84,11 @@ export default function Payments({ onViewHistory }: PaymentsProps) {
     { id: 5, name: 'Emma Davis', property: '555 Cedar Ave, Unit 3', rent: 1600 },
   ];
 
-  const handleRecordPayment = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRecordPayment = (payment: PaymentData) => {
     // In real app, this would save to database
-    console.log('Recording payment:', paymentForm);
+    console.log('Recording payment:', payment);
     alert('Payment recorded successfully!');
     setShowRecordPaymentModal(false);
-    // Reset form
-    setPaymentForm({
-      tenant: '',
-      property: '',
-      amount: '',
-      paymentDate: new Date().toISOString().split('T')[0],
-      paymentMethod: 'Bank Transfer',
-      referenceNumber: '',
-      notes: '',
-    });
-  };
-
-  const handleTenantChange = (tenantId: string) => {
-    const selectedTenant = tenants.find(t => t.id.toString() === tenantId);
-    if (selectedTenant) {
-      setPaymentForm({
-        ...paymentForm,
-        tenant: tenantId,
-        property: selectedTenant.property,
-        amount: selectedTenant.rent.toString(),
-      });
-    }
   };
 
   const handleExportReport = () => {
@@ -366,155 +335,11 @@ export default function Payments({ onViewHistory }: PaymentsProps) {
     </div>
 
     {/* Record Payment Modal */}
-    {showRecordPaymentModal && (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Record Payment</h2>
-            <button
-              onClick={() => setShowRecordPaymentModal(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <X className="w-6 h-6 text-gray-600" />
-            </button>
-          </div>
-
-          <form onSubmit={handleRecordPayment} className="space-y-6">
-            {/* Tenant Selection */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Select Tenant *
-              </label>
-              <select
-                required
-                value={paymentForm.tenant}
-                onChange={(e) => handleTenantChange(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Choose a tenant...</option>
-                {tenants.map((tenant) => (
-                  <option key={tenant.id} value={tenant.id}>
-                    {tenant.name} - {tenant.property}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Property (Auto-filled) */}
-            {paymentForm.property && (
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Property
-                </label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900">
-                  {paymentForm.property}
-                </div>
-              </div>
-            )}
-
-            {/* Amount */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Amount *
-              </label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold">$</span>
-                <input
-                  type="number"
-                  required
-                  step="0.01"
-                  value={paymentForm.amount}
-                  onChange={(e) => setPaymentForm({ ...paymentForm, amount: e.target.value })}
-                  placeholder="0.00"
-                  className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-
-            {/* Payment Date */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Payment Date *
-              </label>
-              <input
-                type="date"
-                required
-                value={paymentForm.paymentDate}
-                onChange={(e) => setPaymentForm({ ...paymentForm, paymentDate: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Payment Method */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Payment Method *
-              </label>
-              <select
-                required
-                value={paymentForm.paymentMethod}
-                onChange={(e) => setPaymentForm({ ...paymentForm, paymentMethod: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option>Bank Transfer</option>
-                <option>Credit Card</option>
-                <option>Debit Card</option>
-                <option>Cash</option>
-                <option>Check</option>
-                <option>Mobile Money</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            {/* Reference Number */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Reference Number (Optional)
-              </label>
-              <input
-                type="text"
-                value={paymentForm.referenceNumber}
-                onChange={(e) => setPaymentForm({ ...paymentForm, referenceNumber: e.target.value })}
-                placeholder="Transaction reference or check number"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {/* Notes */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Notes (Optional)
-              </label>
-              <textarea
-                rows={3}
-                value={paymentForm.notes}
-                onChange={(e) => setPaymentForm({ ...paymentForm, notes: e.target.value })}
-                placeholder="Add any additional notes..."
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              />
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-3 pt-4 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={() => setShowRecordPaymentModal(false)}
-                className="flex-1 px-6 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="flex-1 px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-medium flex items-center justify-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5" />
-                Record Payment
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    )}
+    <RecordPaymentModal
+      isOpen={showRecordPaymentModal}
+      onClose={() => setShowRecordPaymentModal(false)}
+      onSubmit={handleRecordPayment}
+    />
 
     {/* Export Report Modal */}
     {showExportModal && (

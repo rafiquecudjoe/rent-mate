@@ -9,11 +9,10 @@ interface DashboardProps {
   onRecordPayment?: () => void;
   onAddProperty?: () => void;
   onAddTenant?: () => void;
-  onNavigateToLeaseManagement?: () => void;
   onNavigate?: (page: string) => void;
 }
 
-export default function Dashboard({ onRecordPayment, onAddProperty, onAddTenant, onNavigateToLeaseManagement, onNavigate }: DashboardProps) {
+export default function Dashboard({ onRecordPayment, onAddProperty, onAddTenant, onNavigate }: DashboardProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -27,7 +26,6 @@ export default function Dashboard({ onRecordPayment, onAddProperty, onAddTenant,
           onRecordPayment={onRecordPayment}
           onAddProperty={onAddProperty}
           onAddTenant={onAddTenant}
-          onNavigateToLeaseManagement={onNavigateToLeaseManagement}
         />
       </div>
 

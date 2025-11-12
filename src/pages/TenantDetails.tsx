@@ -1,5 +1,6 @@
-import { ArrowLeft, Mail, Phone, MapPin, Calendar, DollarSign, FileText, Home, CreditCard, AlertCircle, CheckCircle, MessageSquare, Send, X } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, MapPin, Calendar, DollarSign, FileText, Home, CreditCard, AlertCircle, CheckCircle, MessageSquare, Send, X, RefreshCw, Eye, Download } from 'lucide-react';
 import { useState } from 'react';
+import LeaseRenewalModal, { RenewalData } from '../components/LeaseRenewalModal';
 
 interface TenantDetailsProps {
   tenantId: number;
@@ -9,11 +10,35 @@ interface TenantDetailsProps {
 export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) {
   const [showContactModal, setShowContactModal] = useState(false);
   const [showLeaseModal, setShowLeaseModal] = useState(false);
+  const [showRenewalModal, setShowRenewalModal] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [deliveryMethod, setDeliveryMethod] = useState<'email' | 'whatsapp' | 'both'>('email');
+  const [leaseTemplate, setLeaseTemplate] = useState('Standard Residential Lease');
+  const [isFromRenewal, setIsFromRenewal] = useState(false);
 
   const formatPhoneForWhatsApp = (phone: string) => {
     // Remove all non-numeric characters
     return phone.replace(/\D/g, '');
+  };
+
+  // Format lease document name: name_lease_MM_YY_MM_YY
+  const formatLeaseDocumentName = (name: string, startDate: string, endDate: string) => {
+    // Convert name to lowercase and replace spaces with underscores
+    const formattedName = name.toLowerCase().replace(/\s+/g, '_');
+    
+    // Parse dates and format as MM_YY
+    const formatDate = (dateStr: string) => {
+      // Parse "Jan 15, 2024" format
+      const date = new Date(dateStr);
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = String(date.getFullYear()).slice(-2);
+      return `${month}_${year}`;
+    };
+    
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+    
+    return `${formattedName}_lease_${formattedStartDate}_${formattedEndDate}.pdf`;
   };
 
   // Mock data - in real app, this would come from API/state based on tenantId
@@ -82,11 +107,25 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
               Contact
             </button>
             <button
-              onClick={() => setShowLeaseModal(true)}
+              onClick={() => setShowRenewalModal(true)}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Renew/Extend
+            </button>
+            <button
+              onClick={() => {
+                // Auto-detect which lease template to use based on tenant status
+                if (tenant.lease.status === 'active') {
+                  // For active leases, default to standard residential
+                  setLeaseTemplate('Standard Residential Lease');
+                }
+                setShowLeaseModal(true);
+              }}
               className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all font-medium flex items-center gap-2"
             >
               <FileText className="w-4 h-4" />
-              Send Lease
+              Send Document
             </button>
           </div>
         </div>
@@ -411,9 +450,18 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Send Lease Agreement</h2>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Send Lease Document</h2>
+              <p className="text-sm text-gray-600 mt-1">
+                Sending to: <span className="font-semibold text-gray-900">{tenant.name}</span>
+              </p>
+            </div>
             <button
-              onClick={() => setShowLeaseModal(false)}
+              onClick={() => {
+                setShowLeaseModal(false);
+                setIsFromRenewal(false);
+                setLeaseTemplate('Standard Residential Lease');
+              }}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <X className="w-6 h-6 text-gray-600" />
@@ -434,20 +482,81 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
             </div>
           </div>
 
+          {isFromRenewal && (
+            <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-green-900">Lease Renewed Successfully!</p>
+                  <p className="text-sm text-green-700 mt-1">
+                    The lease renewal has been created. Now send the updated lease agreement to your tenant.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Info banner when NOT from renewal */}
+          {!isFromRenewal && (
+            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <FileText className="w-5 h-5 text-blue-600 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-blue-900">Current Lease Information</p>
+                  <p className="text-sm text-blue-700 mt-1">
+                    Tenant: {tenant.name} • {tenant.property.unit} at {tenant.property.name}
+                  </p>
+                  <p className="text-xs text-blue-600 mt-1">
+                    Lease Period: {tenant.lease.startDate} - {tenant.lease.endDate}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-4 mb-6">
+            {/* Document Name Preview */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Select Template
+                Document Name
               </label>
-              <select className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Standard Residential Lease</option>
-                <option>Month-to-Month Agreement</option>
-                <option>Commercial Lease</option>
-                <option>Lease Renewal</option>
-                <option>Lease Amendment</option>
-              </select>
+              <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                <p className="text-sm font-mono text-gray-900">
+                  {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}
+                </p>
+              </div>
               <p className="text-xs text-gray-500 mt-2">
-                Template will be auto-filled with tenant and property details
+                Format: name_lease_MM_YY_MM_YY.pdf (start and end dates)
+              </p>
+            </div>
+
+            {/* Document Type - Read-only display */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Document Type
+              </label>
+              <div className={`w-full px-4 py-3 rounded-xl flex items-center justify-between ${
+                isFromRenewal 
+                  ? 'bg-blue-50 border-2 border-blue-300' 
+                  : 'bg-gray-50 border border-gray-200'
+              }`}>
+                <span className={`font-semibold ${
+                  isFromRenewal ? 'text-blue-900' : 'text-gray-900'
+                }`}>
+                  {isFromRenewal ? 'Lease Renewal' : 'Current Lease Agreement'}
+                </span>
+                {isFromRenewal && (
+                  <span className="px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded">
+                    Auto-selected
+                  </span>
+                )}
+              </div>
+              <p className={`text-xs mt-2 ${
+                isFromRenewal ? 'text-blue-600' : 'text-gray-500'
+              }`}>
+                {isFromRenewal 
+                  ? 'Sending new lease renewal agreement' 
+                  : 'Sending current lease agreement to tenant'}
               </p>
             </div>
 
@@ -529,28 +638,222 @@ export default function TenantDetails({ tenantId, onBack }: TenantDetailsProps) 
                 rows={4}
                 placeholder="Add a personal message..."
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                defaultValue={`Hi ${tenant.name.split(' ')[0]},\n\nPlease find attached your personalized lease agreement for ${tenant.property.unit} at ${tenant.property.name}. All tenant and property details have been filled in for your convenience.\n\nPlease review and let me know if you have any questions.\n\nBest regards`}
+                defaultValue={
+                  isFromRenewal
+                    ? `Hi ${tenant.name.split(' ')[0]},\n\nGreat news! Your lease renewal for ${tenant.property.unit} at ${tenant.property.name} has been processed.\n\nPlease find attached your new lease agreement with the updated terms. The document is ready for your review and signature.\n\nDocument: ${formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}\n\nPlease review and let me know if you have any questions.\n\nBest regards`
+                    : `Hi ${tenant.name.split(' ')[0]},\n\nPlease find attached your personalized lease agreement for ${tenant.property.unit} at ${tenant.property.name}. All tenant and property details have been filled in for your convenience.\n\nPlease review and let me know if you have any questions.\n\nBest regards`
+                }
               />
             </div>
           </div>
 
           <div className="flex gap-3">
             <button
-              onClick={() => setShowLeaseModal(false)}
-              className="flex-1 px-6 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+              onClick={() => {
+                setShowLeaseModal(false);
+                setIsFromRenewal(false);
+                setLeaseTemplate('Standard Residential Lease');
+              }}
+              className="px-6 py-3 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
             >
               Cancel
             </button>
             <button
+              onClick={() => setShowPreviewModal(true)}
+              className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-medium flex items-center gap-2"
+            >
+              <Eye className="w-5 h-5" />
+              Preview
+            </button>
+            <button
               onClick={() => {
                 // In a real app, this would send the email
-                alert(`Lease agreement sent to ${tenant.email}`);
+                const documentName = formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate);
+                const deliveryText = deliveryMethod === 'both' ? 'email and WhatsApp' : deliveryMethod;
+                const message = isFromRenewal 
+                  ? `Lease renewal sent!\n\nDocument: ${documentName}\nSent to: ${tenant.email}\nDelivery: ${deliveryText}` 
+                  : `Lease agreement sent!\n\nDocument: ${documentName}\nSent to: ${tenant.email}\nDelivery: ${deliveryText}`;
+                alert(message);
                 setShowLeaseModal(false);
+                setIsFromRenewal(false);
+                setLeaseTemplate('Standard Residential Lease');
               }}
               className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2"
             >
               <Send className="w-5 h-5" />
               Send Agreement
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Lease Renewal/Extension Modal */}
+    <LeaseRenewalModal
+      isOpen={showRenewalModal}
+      onClose={() => setShowRenewalModal(false)}
+      onSubmit={(renewalData: RenewalData) => {
+        console.log('Renewal/Extension Data:', renewalData);
+        alert(`Lease ${renewalData.type} created successfully!\nNew end date: ${renewalData.newEndDate}\nNew rent: $${renewalData.newMonthlyRent}`);
+        setShowRenewalModal(false);
+      }}
+      onSendLease={() => {
+        // Open the send lease modal after renewal is created
+        setIsFromRenewal(true);
+        setLeaseTemplate('Lease Renewal');
+        setShowLeaseModal(true);
+      }}
+      tenant={{
+        id: tenant.id.toString(),
+        name: tenant.name,
+        email: tenant.email
+      }}
+      currentLease={{
+        id: '1',
+        propertyName: tenant.property.name,
+        unitNumber: tenant.property.unit,
+        monthlyRent: tenant.lease.monthlyRent,
+        startDate: tenant.lease.startDate,
+        endDate: tenant.lease.endDate
+      }}
+    />
+
+    {/* Lease Preview Modal */}
+    {showPreviewModal && (
+      <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[60] p-4">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 flex items-center justify-between text-white">
+            <div className="flex items-center gap-3">
+              <FileText className="w-6 h-6" />
+              <div>
+                <h2 className="text-xl font-bold">Lease Agreement Preview</h2>
+                <p className="text-sm text-blue-100">
+                  {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate)}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => alert('Download functionality would be implemented here')}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                title="Download PDF"
+              >
+                <Download className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setShowPreviewModal(false)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Document Preview */}
+          <div className="flex-1 overflow-y-auto bg-gray-100 p-6">
+            <div className="bg-white rounded-lg shadow-lg max-w-3xl mx-auto p-12 font-serif">
+              {/* Document Header */}
+              <div className="text-center mb-8 border-b-2 border-gray-800 pb-6">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {isFromRenewal ? 'LEASE RENEWAL AGREEMENT' : leaseTemplate.toUpperCase()}
+                </h1>
+                <p className="text-sm text-gray-600">
+                  Document ID: {formatLeaseDocumentName(tenant.name, tenant.lease.startDate, tenant.lease.endDate).replace('.pdf', '')}
+                </p>
+              </div>
+
+              {/* Parties */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">PARTIES TO THIS AGREEMENT</h2>
+                <div className="space-y-3 text-gray-700">
+                  <p><strong>Landlord/Property Manager:</strong> Property Management Company</p>
+                  <p><strong>Tenant:</strong> {tenant.name}</p>
+                  <p><strong>Email:</strong> {tenant.email}</p>
+                  <p><strong>Phone:</strong> {tenant.phone}</p>
+                </div>
+              </div>
+
+              {/* Property Details */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">PROPERTY DETAILS</h2>
+                <div className="space-y-3 text-gray-700">
+                  <p><strong>Property Address:</strong> {tenant.property.address}</p>
+                  <p><strong>Property Name:</strong> {tenant.property.name}</p>
+                  <p><strong>Unit:</strong> {tenant.property.unit}</p>
+                </div>
+              </div>
+
+              {/* Lease Terms */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">LEASE TERMS</h2>
+                <div className="space-y-3 text-gray-700">
+                  <p><strong>Lease Start Date:</strong> {tenant.lease.startDate}</p>
+                  <p><strong>Lease End Date:</strong> {tenant.lease.endDate}</p>
+                  <p><strong>Monthly Rent:</strong> ${tenant.lease.monthlyRent.toLocaleString()}</p>
+                  <p><strong>Security Deposit:</strong> ${tenant.lease.securityDeposit.toLocaleString()}</p>
+                  <p><strong>Lease Status:</strong> <span className="text-green-600 font-semibold">{tenant.lease.status}</span></p>
+                </div>
+              </div>
+
+              {/* Terms and Conditions */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">TERMS AND CONDITIONS</h2>
+                <div className="space-y-4 text-gray-700 text-sm leading-relaxed">
+                  <p><strong>1. RENT PAYMENT:</strong> Tenant agrees to pay rent on or before the 1st day of each month. Late payments may incur additional fees as specified in the lease agreement.</p>
+                  
+                  <p><strong>2. SECURITY DEPOSIT:</strong> The security deposit will be held for the duration of the lease and returned within 30 days of lease termination, minus any deductions for damages beyond normal wear and tear.</p>
+                  
+                  <p><strong>3. MAINTENANCE:</strong> Tenant is responsible for maintaining the property in good condition and reporting any maintenance issues promptly.</p>
+                  
+                  <p><strong>4. UTILITIES:</strong> Tenant is responsible for all utilities unless otherwise specified in writing.</p>
+                  
+                  <p><strong>5. TERMINATION:</strong> Either party may terminate this lease with 60 days written notice, subject to the terms outlined in the full lease agreement.</p>
+                </div>
+              </div>
+
+              {/* Signatures */}
+              <div className="mt-12 pt-8 border-t-2 border-gray-300">
+                <h2 className="text-xl font-bold text-gray-900 mb-6">SIGNATURES</h2>
+                <div className="grid grid-cols-2 gap-8">
+                  <div>
+                    <div className="border-b-2 border-gray-400 mb-2 pb-8"></div>
+                    <p className="text-sm text-gray-700 font-semibold">Landlord/Property Manager</p>
+                    <p className="text-xs text-gray-500">Date: _______________</p>
+                  </div>
+                  <div>
+                    <div className="border-b-2 border-gray-400 mb-2 pb-8"></div>
+                    <p className="text-sm text-gray-700 font-semibold">Tenant: {tenant.name}</p>
+                    <p className="text-xs text-gray-500">Date: _______________</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-8 text-center text-xs text-gray-500 border-t pt-4">
+                <p>This is a preview of the lease agreement. The actual document will be generated with complete legal terms and conditions.</p>
+                <p className="mt-1">Generated on {new Date().toLocaleDateString()}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Actions */}
+          <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+            <button
+              onClick={() => setShowPreviewModal(false)}
+              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors font-medium"
+            >
+              Close Preview
+            </button>
+            <button
+              onClick={() => {
+                setShowPreviewModal(false);
+                // Send modal is still open in background
+              }}
+              className="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2"
+            >
+              <Send className="w-4 h-4" />
+              Proceed to Send
             </button>
           </div>
         </div>

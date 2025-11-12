@@ -1,4 +1,4 @@
-import { Home, Building2, Users, CreditCard, Settings, X, FileText, UserCog, LogOut, Wrench } from 'lucide-react';
+import { Home, Building2, Users, CreditCard, Settings, X, UserCog, LogOut, Wrench } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -14,7 +14,6 @@ const menuItems = [
   { icon: Building2, label: 'Properties', id: 'properties' },
   { icon: Users, label: 'Tenants', id: 'tenants' },
   { icon: CreditCard, label: 'Payments', id: 'payments' },
-  { icon: FileText, label: 'Lease Management', id: 'lease-management' },
   { icon: Wrench, label: 'Maintenance', id: 'maintenance-requests' },
   { icon: UserCog, label: 'Team', id: 'team-management' },
   { icon: Settings, label: 'Settings', id: 'settings' },

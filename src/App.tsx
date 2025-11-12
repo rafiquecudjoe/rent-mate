@@ -23,7 +23,6 @@ import TenantPayments from './pages/TenantPayments';
 import MyLease from './pages/MyLease';
 import MaintenanceRequests from './pages/MaintenanceRequests';
 import LandlordMaintenanceRequests from './pages/LandlordMaintenanceRequests';
-import LeaseManagement from './pages/LeaseManagement';
 import TeamManagement from './pages/TeamManagement';
 import TenantProfile from './pages/TenantProfile';
 import LandingPage from './pages/LandingPage';
@@ -152,7 +151,6 @@ function App() {
           onRecordPayment={() => setShowRecordPayment(true)}
           onAddProperty={() => setCurrentPage('addProperty')}
           onAddTenant={() => setCurrentPage('addTenant')}
-          onNavigateToLeaseManagement={() => setCurrentPage('lease-management')}
           onNavigate={(page) => setCurrentPage(page)}
         />;
       case 'properties':
@@ -182,8 +180,6 @@ function App() {
         );
       case 'payments':
         return <Payments onViewHistory={() => setCurrentPage('paymentHistory')} />;
-      case 'lease-management':
-        return <LeaseManagement />;
       case 'maintenance-requests':
         return <LandlordMaintenanceRequests />;
       case 'team-management':

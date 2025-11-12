@@ -1,13 +1,12 @@
-import { Plus, UserPlus, FileText, DollarSign } from 'lucide-react';
+import { Plus, UserPlus, DollarSign } from 'lucide-react';
 
 interface QuickActionsProps {
   onRecordPayment?: () => void;
   onAddProperty?: () => void;
   onAddTenant?: () => void;
-  onNavigateToLeaseManagement?: () => void;
 }
 
-export default function QuickActions({ onRecordPayment, onAddProperty, onAddTenant, onNavigateToLeaseManagement }: QuickActionsProps) {
+export default function QuickActions({ onRecordPayment, onAddProperty, onAddTenant }: QuickActionsProps) {
   return (
     <div className="flex flex-wrap gap-2">
       <button
@@ -23,13 +22,6 @@ export default function QuickActions({ onRecordPayment, onAddProperty, onAddTena
       >
         <UserPlus className="w-4 h-4" />
         <span className="text-sm">New Tenant</span>
-      </button>
-      <button
-        onClick={onNavigateToLeaseManagement}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-medium transition-all duration-200 shadow-lg shadow-orange-600/30 hover:shadow-xl hover:shadow-orange-600/40 transform hover:-translate-y-0.5 hidden md:flex"
-      >
-        <FileText className="w-4 h-4" />
-        <span className="text-sm">Manage Leases</span>
       </button>
       <button
         onClick={onRecordPayment}

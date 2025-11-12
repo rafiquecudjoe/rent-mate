@@ -1,3 +1,5 @@
+import { RefreshCw, Clock } from 'lucide-react';
+
 const leases = [
   {
     tenantName: 'Alice Johnson',
@@ -60,6 +62,9 @@ export default function LeasesTable({ onNavigateToTenants }: LeasesTableProps) {
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Status
               </th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -84,6 +89,26 @@ export default function LeasesTable({ onNavigateToTenants }: LeasesTableProps) {
                   `}>
                     {lease.status}
                   </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {lease.status !== 'Renewed' && (
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => alert(`Open renewal modal for ${lease.tenantName}`)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-lg hover:bg-green-700 transition-all"
+                      >
+                        <RefreshCw className="w-3 h-3" />
+                        Renew
+                      </button>
+                      <button 
+                        onClick={() => alert(`Open extension modal for ${lease.tenantName}`)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-all"
+                      >
+                        <Clock className="w-3 h-3" />
+                        Extend
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
